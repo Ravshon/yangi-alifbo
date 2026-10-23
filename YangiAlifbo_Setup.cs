@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Reflection;
+using System.Threading;
 
 namespace YangiAlifboInstaller {
     public class InstallerForm : Form {
@@ -63,7 +64,7 @@ namespace YangiAlifboInstaller {
             chkKeyboard.Checked = true;
 
             chkWordAddin = new CheckBox();
-            chkWordAddin.Text = "2. Microsoft Word Qo'shimchasi (Add-in)\n   Word lentasida bitta tugma: Eski matnni (SH, CH, O', G') 1 bosishda yangi alifboga o'giradi.";
+            chkWordAddin.Text = "2. Microsoft Word Qo'shimchasi (Add-in)\n   Word'da 'Вид'dan keyin 'Yangi Alifbo' lentasi: Kirill-Lotin va Yangi-Eski alifboga 1-klikda o'tkazish.";
             chkWordAddin.Font = new Font("Segoe UI", 9.2f, FontStyle.Regular);
             chkWordAddin.ForeColor = Color.FromArgb(15, 23, 42);
             chkWordAddin.Location = new Point(20, 95);
@@ -129,6 +130,27 @@ namespace YangiAlifboInstaller {
                 return;
             }
 
+            // Check if Word is running before proceeding
+            if (chkWordAddin.Checked && IsWordRunning()) {
+                DialogResult dr = MessageBox.Show(
+                    "Microsoft Word dasturi hozirda ochiq turibdi!\n\n" +
+                    "Qo'shimchani to'liq o'rnatish uchun Word dasturini yopish kerak.\n\n" +
+                    "Word dasturini hozir avtomatik yopaylikmi? (Hujjatingiz saqlanganligiga ishonch hosil qiling)",
+                    "Microsoft Word ochiq",
+                    MessageBoxButtons.YesNoCancel,
+                    MessageBoxIcon.Question
+                );
+
+                if (dr == DialogResult.Yes) {
+                    CloseWordProcesses();
+                } else if (dr == DialogResult.No) {
+                    MessageBox.Show("Iltimos, Word hujjatlaringizni saqlab, dasturni yoping va qaytadan 'O'rnatish' tugmasini bosing.", "Ma'lumot", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                } else {
+                    return;
+                }
+            }
+
             btnInstall.Enabled = false;
             btnUninstall.Enabled = false;
             progressBar.Visible = true;
@@ -146,7 +168,7 @@ namespace YangiAlifboInstaller {
                     msg += "• Klaviatura: Win + Bo'sh joy (Space) tugmasi orqali 'Uzbek - new' ni tanlang.\n";
                 }
                 if (chkWordAddin.Checked) {
-                    msg += "• Microsoft Word: Dasturni ochsangiz, 'Bosh sahifa' (Home) lentasida 'Yangi Alifbo' tugmasi paydo bo'ldi.\n";
+                    msg += "• Microsoft Word: Dasturni ochsangiz, 'Вид' lentasidan keyin alohida 'Yangi Alifbo' bo'limi paydo bo'ldi.\n";
                 }
                 MessageBox.Show(msg, "O'rnatish yakunlandi", MessageBoxButtons.OK, MessageBoxIcon.Information);
             } catch (Exception ex) {
@@ -169,6 +191,17 @@ namespace YangiAlifboInstaller {
             );
             if (res != DialogResult.Yes) return;
 
+            if (chkWordAddin.Checked && IsWordRunning()) {
+                DialogResult dr = MessageBox.Show(
+                    "Microsoft Word dasturi hozirda ochiq turibdi!\nWord dasturini avtomatik yopaylikmi?",
+                    "Word ochiq",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question
+                );
+                if (dr == DialogResult.Yes) CloseWordProcesses();
+                else return;
+            }
+
             btnInstall.Enabled = false;
             btnUninstall.Enabled = false;
             progressBar.Visible = true;
@@ -189,6 +222,28 @@ namespace YangiAlifboInstaller {
                 btnInstall.Enabled = true;
                 btnUninstall.Enabled = true;
             }
+        }
+
+        private static bool IsWordRunning() {
+            Process[] procs = Process.GetProcessesByName("winword");
+            return procs != null && procs.Length > 0;
+        }
+
+        private static void CloseWordProcesses() {
+            Process[] procs = Process.GetProcessesByName("winword");
+            foreach (Process p in procs) {
+                try {
+                    p.CloseMainWindow();
+                } catch {}
+            }
+            Thread.Sleep(1000);
+            procs = Process.GetProcessesByName("winword");
+            foreach (Process p in procs) {
+                try {
+                    p.Kill();
+                } catch {}
+            }
+            Thread.Sleep(500);
         }
 
         public static void DoInstall(bool installKeyboard, bool installWord) {
@@ -234,7 +289,21 @@ namespace YangiAlifboInstaller {
                         string wordStartup = Path.Combine(appData, "Microsoft", "Word", "STARTUP");
                         Directory.CreateDirectory(wordStartup);
                         string dotmDest = Path.Combine(wordStartup, dotmName);
-                        File.Copy(dotmSrc, dotmDest, true);
+
+                        // Try copying with retries in case lock is releasing
+                        int retries = 3;
+                        while (retries > 0) {
+                            try {
+                                File.Copy(dotmSrc, dotmDest, true);
+                                break;
+                            } catch (IOException) {
+                                retries--;
+                                if (retries == 0) {
+                                    throw new Exception("Microsoft Word dasturi ochiq turgani sababli fayl qulflangan. Iltimos, Word dasturini to'liq yopib qaytadan urinib ko'ring.");
+                                }
+                                Thread.Sleep(1000);
+                            }
+                        }
                     }
                 }
             } finally {
@@ -272,7 +341,19 @@ namespace YangiAlifboInstaller {
                     string appData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
                     string dotmDest = Path.Combine(appData, "Microsoft", "Word", "STARTUP", "YangiAlifbo.dotm");
                     if (File.Exists(dotmDest)) {
-                        File.Delete(dotmDest);
+                        int retries = 3;
+                        while (retries > 0) {
+                            try {
+                                File.Delete(dotmDest);
+                                break;
+                            } catch (IOException) {
+                                retries--;
+                                if (retries == 0) {
+                                    throw new Exception("Word dasturi ochiq turgani sababli faylni o'chirib bo'lmadi. Iltimos, Word dasturini yoping.");
+                                }
+                                Thread.Sleep(1000);
+                            }
+                        }
                     }
                 }
             } finally {
