@@ -1,0 +1,61 @@
+========================================================================
+    O'ZBEKCHA YANGI ALIFBO KLAVIATURASI (WINDOWS UCHUN)
+========================================================================
+
+Ushbu klaviatura yangi qabul qilingan alifbo harflarini (Ö, Ğ, Ş, Ç) 
+standart QWERTY klaviaturasida eng qulay va tezkor yozish uchun maxsus 
+ishlab chiqilgan.
+
+------------------------------------------------------------------------
+1. TUGMALAR JOYLASHUVI:
+------------------------------------------------------------------------
+  • P harfining o'ng tomonidagi tugma ([ o'rnida):
+      Oddiy bosish:     ö
+      Shift bilan:      Ö
+      AltGr (O'ng Alt): [
+      AltGr + Shift:    {
+
+  • Ö harfining o'ng tomonidagi tugma (] o'rnida):
+      Oddiy bosish:     ğ
+      Shift bilan:      Ğ
+      AltGr (O'ng Alt): ]
+      AltGr + Shift:    }
+
+  • L harfining o'ng tomonidagi tugma (; o'rnida):
+      Oddiy bosish:     ş
+      Shift bilan:      Ş
+      AltGr (O'ng Alt): ;
+      AltGr + Shift:    :
+
+  • Ş harfining o'ng tomonidagi tugma (' o'rnida):
+      Oddiy bosish:     ç
+      Shift bilan:      Ç
+      AltGr (O'ng Alt): '
+      AltGr + Shift:    "
+
+  • Ğ harfining o'ng tomonidagi tugma (\ o'rnida):
+      Oddiy bosish:     ; (nuqtali vergul)
+      Shift bilan:      : (ikki nuqta)
+      AltGr (O'ng Alt): \
+      AltGr + Shift:    |
+
+  • 1 raqamining chap tomonidagi tugma (` o'rnida):
+      Oddiy bosish:     ' (tutuq belgisi / apostrof)
+      Shift bilan:      " (qo'shtirnoq)
+      AltGr (O'ng Alt): ` (grave)
+      AltGr + Shift:    ~ (tilde)
+
+------------------------------------------------------------------------
+2. O'RNATISH TARTIBI:
+------------------------------------------------------------------------
+  1. "setup.exe" yoki "O'rnatish.bat" faylini ishga tushiring (ikki marta bosing).
+  2. O'rnatish yakunlangach, "Close" tugmasini bosing.
+  3. Windows til panelida (yoki Win + Bo'sh joy / Shift + Alt)
+     yangi klaviaturani tanlang.
+
+------------------------------------------------------------------------
+3. O'CHIRISH (KERAK BO'LGANDA):
+------------------------------------------------------------------------
+  Windows Sozlamalari (Settings) -> "O'rnatilgan ilovalar" bo'limidan 
+  yoki papkadagi "O'chirish.bat" orqali istalgan vaqtda o'chirib tashlash mumkin.
+========================================================================

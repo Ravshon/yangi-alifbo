@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>O'zbekcha Yangi Alifbo Klaviaturasi — Windows uchun</title>
+  <meta name="description" content="O'zbekistonning yangi lotin alifbosi (Ö, Ğ, Ş, Ç) uchun maxsus Windows klaviatura drayveri va 1-klikli o'rnatuvchi dastur.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --card-bg: #131b2e;
+      --card-border: #1e293b;
+      --primary: #10b981;
+      --primary-hover: #059669;
+      --primary-glow: rgba(16, 185, 129, 0.25);
+      --accent: #38bdf8;
+      --accent-red: #ef4444;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --key-bg: #1e293b;
+      --key-border: #334155;
+      --key-highlight-bg: #3f1414;
+      --key-highlight-border: #ef4444;
+      --key-highlight-text: #fca5a5;
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      background-color: var(--bg);
+      color: var(--text-main);
+      line-height: 1.6;
+      overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Ambient background gradient glow */
+    .glow-top {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: clamp(300px, 80vw, 1000px);
+      height: 400px;
+      background: radial-gradient(circle, rgba(16, 185, 129, 0.12) 0%, rgba(56, 189, 248, 0.05) 50%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      width: min(100% - 32px, 1140px);
+      margin-inline: auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Header */
+    header {
+      padding-top: 2rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .nav-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      color: var(--text-main);
+      font-weight: 800;
+      font-size: 1.25rem;
+    }
+
+    .brand-badge {
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: #0b0f19;
+      font-size: 0.75rem;
+      font-weight: 800;
+      padding: 0.2rem 0.55rem;
+      border-radius: 6px;
+      letter-spacing: 0.5px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+    }
+
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+    }
+
+    /* Hero */
+    .hero {
+      padding: clamp(3rem, 7vw, 5.5rem) 0 3rem;
+      text-align: center;
+    }
+
+    .pill-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 1rem;
+      border-radius: 9999px;
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      color: var(--primary);
+      font-size: 0.875rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.25rem, 5vw, 3.75rem);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.25rem;
+    }
+
+    .hero h1 span {
+      background: linear-gradient(135deg, #34d399, #38bdf8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-desc {
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      color: var(--text-muted);
+      max-width: 680px;
+      margin: 0 auto 2.5rem;
+    }
+
+    .cta-group {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      padding: 0.95rem 1.85rem;
+      border-radius: var(--radius-md);
+      font-weight: 700;
+      font-size: 1.05rem;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #0b0f19;
+      box-shadow: 0 10px 25px -5px var(--primary-glow);
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 15px 30px -5px var(--primary-glow);
+    }
+
+    .btn-secondary {
+      background: var(--card-bg);
+      color: var(--text-main);
+      border: 1px solid var(--card-border);
+    }
+
+    .btn-secondary:hover {
+      background: #1e293b;
+      border-color: #475569;
+    }
+
+    .download-meta {
+      font-size: 0.85rem;
+      color: var(--text-dim);
+    }
+
+    /* Live Keyboard Simulator */
+    .simulator-section {
+      padding: 3rem 0;
+    }
+
+    .section-title-wrap {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    .section-title {
+      font-size: clamp(1.6rem, 3.5vw, 2.25rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+    }
+
+    .section-sub {
+      color: var(--text-muted);
+      font-size: 1rem;
+    }
+
+    .sim-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-lg);
+      padding: clamp(1.25rem, 3vw, 2rem);
+      box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
+    }
+
+    .typing-box {
+      width: 100%;
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-radius: var(--radius-sm);
+      padding: 1rem 1.25rem;
+      color: #38bdf8;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.15rem;
+      min-height: 80px;
+      resize: vertical;
+      outline: none;
+      margin-bottom: 1.5rem;
+      transition: border-color 0.2s;
+    }
+
+    .typing-box:focus {
+      border-color: var(--accent);
+    }
+
+    /* Keyboard Layout Mockup */
+    .keyboard {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      background: #090e17;
+      padding: 16px;
+      border-radius: var(--radius-md);
+      border: 1px solid #1e293b;
+      overflow-x: auto;
+      user-select: none;
+    }
+
+    .kb-row {
+      display: flex;
+      gap: 6px;
+      justify-content: center;
+      min-width: 750px;
+    }
+
+    .key {
+      position: relative;
+      background: var(--key-bg);
+      border: 1px solid var(--key-border);
+      color: #e2e8f0;
+      border-radius: 6px;
+      height: 48px;
+      min-width: 44px;
+      padding: 4px 6px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.1s ease;
+    }
+
+    .key:hover {
+      background: #334155;
+      transform: translateY(-1px);
+    }
+
+    .key:active, .key.active {
+      transform: translateY(1px);
+      background: #475569;
+    }
+
+    .key-highlight {
+      background: var(--key-highlight-bg);
+      border-color: var(--key-highlight-border);
+      color: var(--key-highlight-text);
+      box-shadow: 0 0 12px rgba(239, 68, 68, 0.25);
+    }
+
+    .key-highlight:hover {
+      background: #501919;
+      border-color: #f87171;
+    }
+
+    .key-w-sm { width: 44px; }
+    .key-w-md { width: 68px; }
+    .key-w-lg { width: 92px; }
+    .key-w-xl { width: 105px; }
+    .key-space { width: 280px; }
+
+    .key-top {
+      font-size: 0.72rem;
+      opacity: 0.75;
+      line-height: 1;
+    }
+
+    .key-main {
+      font-size: 1rem;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    /* Photo reference section */
+    .photo-section {
+      padding: 3rem 0;
+    }
+
+    .photo-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      align-items: center;
+    }
+
+    .photo-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      border-right: 1px solid var(--card-border);
+    }
+
+    .photo-text {
+      padding: clamp(1.5rem, 3vw, 2.5rem);
+    }
+
+    .photo-text h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      font-weight: 800;
+    }
+
+    .key-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+
+    .key-list li {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.95rem;
+    }
+
+    .key-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 38px;
+      padding: 0.2rem 0.5rem;
+      background: #2b1111;
+      border: 1px solid #ef4444;
+      color: #fca5a5;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-radius: 6px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Steps Section */
+    .steps-section {
+      padding: 3rem 0;
+    }
+
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .step-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-md);
+      padding: 1.75rem;
+      position: relative;
+    }
+
+    .step-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(16, 185, 129, 0.15);
+      color: var(--primary);
+      font-weight: 800;
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+    }
+
+    .step-card h4 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .step-card p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    /* FAQ */
+    .faq-section {
+      padding: 3rem 0 5rem;
+    }
+
+    .faq-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      max-width: 780px;
+      margin: 2rem auto 0;
+    }
+
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-md);
+      padding: 1.25rem 1.5rem;
+    }
+
+    .faq-item h4 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: var(--text-main);
+    }
+
+    .faq-item p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    /* Footer */
+    footer {
+      margin-top: auto;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      padding: 2.5rem 0;
+      text-align: center;
+      color: var(--text-dim);
+      font-size: 0.9rem;
+    }
+
+    footer a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .photo-card { grid-template-columns: 1fr; }
+      .photo-img { border-right: none; border-bottom: 1px solid var(--card-border); }
+    }
+  </style>
+</head>
+<body>
+  <div class="glow-top"></div>
+
+  <header>
+    <div class="container">
+      <div class="nav-content">
+        <a href="#" class="brand">
+          <span>YangiAlifbo</span>
+          <span class="brand-badge">WIN</span>
+        </a>
+        <div class="nav-links">
+          <a href="#simulator">Sinab ko'rish</a>
+          <a href="#xarita">Tugmalar</a>
+          <a href="#ornatish">O'rnatish</a>
+          <a href="#faq">Savollar</a>
+          <a href="https://github.com/Ravshon/yangi-alifbo" target="_blank">GitHub</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="container">
+        <div class="pill-badge">
+          <span>🇺🇿</span> O'zbekistonning yangi lotin alifbosi
+        </div>
+        <h1>
+          Yangi alifboda yozish<br>
+          <span>endi juda oson va tezkor!</span>
+        </h1>
+        <p class="hero-desc">
+          Windows tizimiga <strong>Ö</strong>, <strong>Ğ</strong>, <strong>Ş</strong>, <strong>Ç</strong> harflari kiritilgan rasmiy klaviatura tartibi. Ortiqcha fayllarsiz, bittagina mustaqil <code>.exe</code> orqali 1-klikda o'rnatiladi.
+        </p>
+        <div class="cta-group">
+          <a href="YangiAlifbo_Setup.exe" class="btn btn-primary" download>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Yuklab olish (.exe)
+          </a>
+          <a href="#simulator" class="btn btn-secondary">
+            Klaviatura simulyatori
+          </a>
+        </div>
+        <div class="download-meta">
+          Versiya 1.0 • Hajmi: 279 KB • Windows 11, 10, 8, 7 (64-bit / 32-bit)
+        </div>
+      </div>
+    </section>
+
+    <!-- Simulator Section -->
+    <section class="simulator-section" id="simulator">
+      <div class="container">
+        <div class="section-title-wrap">
+          <h2 class="section-title">Brauzerda sinab ko'ring</h2>
+          <p class="section-sub">Quyidagi maydonga matn yozing — yangi harflar avtomatik ishlaydi!</p>
+        </div>
+
+        <div class="sim-card">
+          <textarea id="liveTextarea" class="typing-box" placeholder="Shu yerga yozib ko'ring: [ bosilsa 'ö', ] bosilsa 'ğ', ; bosilsa 'ş', ' bosilsa 'ç' chiqadi..."></textarea>
+
+          <div class="keyboard" id="visualKeyboard">
+            <!-- Row 1: Tilde and numbers -->
+            <div class="kb-row">
+              <div class="key key-w-sm key-highlight" data-key="Backquote">
+                <span class="key-top">"</span>
+                <span class="key-main">'</span>
+              </div>
+              <div class="key key-w-sm" data-key="Digit1"><span class="key-top">!</span><span class="key-main">1</span></div>
+              <div class="key key-w-sm" data-key="Digit2"><span class="key-top">@</span><span class="key-main">2</span></div>
+              <div class="key key-w-sm" data-key="Digit3"><span class="key-top">#</span><span class="key-main">3</span></div>
+              <div class="key key-w-sm" data-key="Digit4"><span class="key-top">$</span><span class="key-main">4</span></div>
+              <div class="key key-w-sm" data-key="Digit5"><span class="key-top">%</span><span class="key-main">5</span></div>
+              <div class="key key-w-sm" data-key="Digit6"><span class="key-top">^</span><span class="key-main">6</span></div>
+              <div class="key key-w-sm" data-key="Digit7"><span class="key-top">&</span><span class="key-main">7</span></div>
+              <div class="key key-w-sm" data-key="Digit8"><span class="key-top">*</span><span class="key-main">8</span></div>
+              <div class="key key-w-sm" data-key="Digit9"><span class="key-top">(</span><span class="key-main">9</span></div>
+              <div class="key key-w-sm" data-key="Digit0"><span class="key-top">)</span><span class="key-main">0</span></div>
+              <div class="key key-w-sm" data-key="Minus"><span class="key-top">_</span><span class="key-main">-</span></div>
+              <div class="key key-w-sm" data-key="Equal"><span class="key-top">+</span><span class="key-main">=</span></div>
+              <div class="key key-w-md" data-key="Backspace"><span class="key-main" style="font-size:0.75rem;">Backspace</span></div>
+            </div>
+
+            <!-- Row 2: QWERTY + Ö + Ğ + :; -->
+            <div class="kb-row">
+              <div class="key key-w-md" data-key="Tab"><span class="key-main" style="font-size:0.75rem;">Tab</span></div>
+              <div class="key key-w-sm" data-key="KeyQ"><span class="key-main">Q</span></div>
+              <div class="key key-w-sm" data-key="KeyW"><span class="key-main">W</span></div>
+              <div class="key key-w-sm" data-key="KeyE"><span class="key-main">E</span></div>
+              <div class="key key-w-sm" data-key="KeyR"><span class="key-main">R</span></div>
+              <div class="key key-w-sm" data-key="KeyT"><span class="key-main">T</span></div>
+              <div class="key key-w-sm" data-key="KeyY"><span class="key-main">Y</span></div>
+              <div class="key key-w-sm" data-key="KeyU"><span class="key-main">U</span></div>
+              <div class="key key-w-sm" data-key="KeyI"><span class="key-main">I</span></div>
+              <div class="key key-w-sm" data-key="KeyO"><span class="key-main">O</span></div>
+              <div class="key key-w-sm" data-key="KeyP"><span class="key-main">P</span></div>
+              <div class="key key-w-sm key-highlight" data-key="BracketLeft"><span class="key-top">[</span><span class="key-main">Ö</span></div>
+              <div class="key key-w-sm key-highlight" data-key="BracketRight"><span class="key-top">]</span><span class="key-main">Ğ</span></div>
+              <div class="key key-w-sm key-highlight" data-key="Backslash"><span class="key-top">:</span><span class="key-main">;</span></div>
+            </div>
+
+            <!-- Row 3: ASDF + Ş + Ç -->
+            <div class="kb-row">
+              <div class="key key-w-lg" data-key="CapsLock"><span class="key-main" style="font-size:0.75rem;">CapsLock</span></div>
+              <div class="key key-w-sm" data-key="KeyA"><span class="key-main">A</span></div>
+              <div class="key key-w-sm" data-key="KeyS"><span class="key-main">S</span></div>
+              <div class="key key-w-sm" data-key="KeyD"><span class="key-main">D</span></div>
+              <div class="key key-w-sm" data-key="KeyF"><span class="key-main">F</span></div>
+              <div class="key key-w-sm" data-key="KeyG"><span class="key-main">G</span></div>
+              <div class="key key-w-sm" data-key="KeyH"><span class="key-main">H</span></div>
+              <div class="key key-w-sm" data-key="KeyJ"><span class="key-main">J</span></div>
+              <div class="key key-w-sm" data-key="KeyK"><span class="key-main">K</span></div>
+              <div class="key key-w-sm" data-key="KeyL"><span class="key-main">L</span></div>
+              <div class="key key-w-sm key-highlight" data-key="Semicolon"><span class="key-top">Ş</span><span class="key-main">ş</span></div>
+              <div class="key key-w-sm key-highlight" data-key="Quote"><span class="key-top">Ç</span><span class="key-main">ç</span></div>
+              <div class="key key-w-lg" data-key="Enter"><span class="key-main" style="font-size:0.75rem;">Enter</span></div>
+            </div>
+
+            <!-- Row 4: ZXCV -->
+            <div class="kb-row">
+              <div class="key key-w-xl" data-key="ShiftLeft"><span class="key-main" style="font-size:0.75rem;">Shift</span></div>
+              <div class="key key-w-sm" data-key="KeyZ"><span class="key-main">Z</span></div>
+              <div class="key key-w-sm" data-key="KeyX"><span class="key-main">X</span></div>
+              <div class="key key-w-sm" data-key="KeyC"><span class="key-main">C</span></div>
+              <div class="key key-w-sm" data-key="KeyV"><span class="key-main">V</span></div>
+              <div class="key key-w-sm" data-key="KeyB"><span class="key-main">B</span></div>
+              <div class="key key-w-sm" data-key="KeyN"><span class="key-main">N</span></div>
+              <div class="key key-w-sm" data-key="KeyM"><span class="key-main">M</span></div>
+              <div class="key key-w-sm" data-key="Comma"><span class="key-top"><</span><span class="key-main">,</span></div>
+              <div class="key key-w-sm" data-key="Period"><span class="key-top">></span><span class="key-main">.</span></div>
+              <div class="key key-w-sm" data-key="Slash"><span class="key-top">?</span><span class="key-main">/</span></div>
+              <div class="key key-w-xl" data-key="ShiftRight"><span class="key-main" style="font-size:0.75rem;">Shift</span></div>
+            </div>
+
+            <!-- Row 5: Space -->
+            <div class="kb-row">
+              <div class="key key-w-md"><span class="key-main" style="font-size:0.75rem;">Ctrl</span></div>
+              <div class="key key-w-md"><span class="key-main" style="font-size:0.75rem;">Win</span></div>
+              <div class="key key-w-md"><span class="key-main" style="font-size:0.75rem;">Alt</span></div>
+              <div class="key key-space" data-key="Space"><span class="key-main" style="font-size:0.75rem;">Bo'sh joy (Space)</span></div>
+              <div class="key key-w-md"><span class="key-main" style="font-size:0.75rem;">AltGr</span></div>
+              <div class="key key-w-md"><span class="key-main" style="font-size:0.75rem;">Ctrl</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Photo and Map Section -->
+    <section class="photo-section" id="xarita">
+      <div class="container">
+        <div class="photo-card">
+          <img src="keyboard.png" alt="O'zbekcha yangi alifbo klaviaturasi fotosurati" class="photo-img">
+          <div class="photo-text">
+            <h3>Qizil belgilar bilan belgilangan tugmalar</h3>
+            <p style="color: var(--text-muted); margin-bottom: 1.25rem;">
+              Klaviaturadagi yangi harflar matn terishda maksimal tezlikni ta'minlash uchun o'ng qo'lning eng qulay sohalariga joylashtirilgan:
+            </p>
+            <ul class="key-list">
+              <li>
+                <span class="key-badge">[</span>
+                <span><strong>Ö</strong> va <strong>ö</strong> harflari (P ning o'ngida)</span>
+              </li>
+              <li>
+                <span class="key-badge">]</span>
+                <span><strong>Ğ</strong> va <strong>ğ</strong> harflari (Ö ning o'ngida)</span>
+              </li>
+              <li>
+                <span class="key-badge">;</span>
+                <span><strong>Ş</strong> va <strong>ş</strong> harflari (L ning o'ngida)</span>
+              </li>
+              <li>
+                <span class="key-badge">'</span>
+                <span><strong>Ç</strong> va <strong>ç</strong> harflari (Ş ning o'ngida)</span>
+              </li>
+              <li>
+                <span class="key-badge">\</span>
+                <span><strong>;</strong> (nuqtali vergul) va <strong>:</strong> (ikki nuqta)</span>
+              </li>
+              <li>
+                <span class="key-badge">`</span>
+                <span><strong>'</strong> (tutuq belgisi) va <strong>"</strong> (qo'shtirnoq)</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Installation Steps -->
+    <section class="steps-section" id="ornatish">
+      <div class="container">
+        <div class="section-title-wrap">
+          <h2 class="section-title">Qanday o'rnatiladi?</h2>
+          <p class="section-sub">Faqat 3 ta oddiy qadam — administrator huquqlari bilan bir zumda o'rnatiladi</p>
+        </div>
+
+        <div class="steps-grid">
+          <div class="step-card">
+            <div class="step-number">1</div>
+            <h4>Faylni yuklab oling</h4>
+            <p>Yuqoridagi yashil tugma orqali <code>YangiAlifbo_Setup.exe</code> faylini kompyuteringizga yuklab oling.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">2</div>
+            <h4>1-klik bilan o'rnating</h4>
+            <p>Faylni ikki marta bosing va oynadagi <strong>"Klaviaturani O'rnatish"</strong> tugmasini bosing.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">3</div>
+            <h4>Klaviaturani tanlang</h4>
+            <p>Klaviaturada <strong>Win + Bo'sh joy</strong> (Space) tugmalarini bosib, til panelidan <strong>"Uzbek - new"</strong> ni tanlang.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq-section" id="faq">
+      <div class="container">
+        <div class="section-title-wrap">
+          <h2 class="section-title">Ko'p so'raladigan savollar</h2>
+        </div>
+
+        <div class="faq-grid">
+          <div class="faq-item">
+            <h4>Dasturchilar uchun qavslar ([ ] { }) qayerga ketdi?</h4>
+            <p>Barcha dasturlash qavslari o'z joyida saqlangan! Ularni yozish uchun o'ng tomondagi <strong>AltGr (o'ng Alt)</strong> tugmasini bosib turing. Masalan: <code>AltGr + ö</code> tugmasi <code>[</code> belgisini, <code>AltGr + Shift + ö</code> esa <code>{</code> belgisini chiqaradi.</p>
+          </div>
+          <div class="faq-item">
+            <h4>Qaysi Windows tizimlarida ishlaydi?</h4>
+            <p>Dastur Windows 11, Windows 10, Windows 8 va Windows 7 (ham 64-bit, ham 32-bit arxitekturalari) bilan 100% mos keladi.</p>
+          </div>
+          <div class="faq-item">
+            <h4>Keyinchalik o'chirib tashlash mumkinmi?</h4>
+            <p>Ha, albatta. <code>YangiAlifbo_Setup.exe</code> faylini qayta ochib "O'chirish" tugmasini bosishingiz yoki Windows Sozlamalaridagi "O'rnatilgan ilovalar" bo'limidan bir zumda o'chirishingiz mumkin.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>O'zbekistonning yangi lotin alifbosi tashabbusi • Ochiq manbali loyiha (Open Source)</p>
+      <p style="margin-top: 0.5rem;">Muallif: <a href="https://github.com/Ravshon" target="_blank">Ravshon</a> • <a href="https://github.com/Ravshon/yangi-alifbo" target="_blank">GitHub ombori</a></p>
+    </div>
+  </footer>
+
+  <script>
+    // In-browser keyboard simulation mapping
+    const keyMap = {
+      '[': { normal: 'ö', shift: 'Ö' },
+      ']': { normal: 'ğ', shift: 'Ğ' },
+      ';': { normal: 'ş', shift: 'Ş' },
+      "'": { normal: 'ç', shift: 'Ç' },
+      '\\': { normal: ';', shift: ':' },
+      '`': { normal: "'", shift: '"' }
+    };
+
+    const textarea = document.getElementById('liveTextarea');
+
+    textarea.addEventListener('keydown', (e) => {
+      // Highlight visual key
+      const keyElem = document.querySelector(`.key[data-key="${e.code}"]`);
+      if (keyElem) {
+        keyElem.classList.add('active');
+        setTimeout(() => keyElem.classList.remove('active'), 150);
+      }
+
+      // Check if pressed key maps to new alphabet
+      if (keyMap.hasOwnProperty(e.key)) {
+        e.preventDefault();
+        const mapped = e.shiftKey ? keyMap[e.key].shift : keyMap[e.key].normal;
+        
+        // Insert character at cursor position
+        const start = textarea.selectionStart;
+        const end = textarea.selectionEnd;
+        const text = textarea.value;
+        textarea.value = text.substring(0, start) + mapped + text.substring(end);
+        textarea.selectionStart = textarea.selectionEnd = start + mapped.length;
+      }
+    });
+
+    // Make on-screen keys clickable
+    document.querySelectorAll('.key').forEach(k => {
+      k.addEventListener('click', () => {
+        let char = '';
+        const main = k.querySelector('.key-main');
+        if (main) {
+          const txt = main.innerText;
+          if (txt === "Bo'sh joy (Space)") char = ' ';
+          else if (txt === 'Backspace') {
+            textarea.value = textarea.value.slice(0, -1);
+            textarea.focus();
+            return;
+          } else if (txt === 'Enter') char = '\n';
+          else if (txt.length === 1) char = txt.toLowerCase();
+        }
+        if (char) {
+          textarea.value += char;
+          textarea.focus();
+        }
+      });
+    });
+  </script>
+</body>
+</html>
