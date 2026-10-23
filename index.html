@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>O'zbekcha Yangi Alifbo — Windows Klaviaturasi va Onlayn Konvertor</title>
-  <meta name="description" content="O'zbekistonning yangi lotin alifbosi (Ö, Ğ, Ş, Ç) uchun Windows klaviatura drayveri, onlayn matn konvertori va Microsoft Word uchun 1-klikli qo'shimcha.">
+  <title>O'zbekcha Yangi Alifbo — Windows Klaviaturasi, Word Qo'shimchasi va Konvertor</title>
+  <meta name="description" content="O'zbekistonning yangi lotin alifbosi (Ö, Ğ, Ş, Ç) uchun Windows klaviatura drayveri, ko'p funksiyali Kirill-Lotin konvertori va Microsoft Word uchun maxsus qo'shimcha.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -50,7 +50,6 @@
       flex-direction: column;
     }
 
-    /* Ambient background gradient glow */
     .glow-top {
       position: absolute;
       top: 0;
@@ -70,14 +69,13 @@
       z-index: 1;
     }
 
-    /* Header */
     header {
-      padding-top: 1.75rem;
-      padding-bottom: 1.5rem;
+      padding-top: 1.5rem;
+      padding-bottom: 1.25rem;
       border-bottom: 1px solid rgba(255, 255, 255, 0.05);
       position: sticky;
       top: 0;
-      background: rgba(11, 15, 25, 0.85);
+      background: rgba(11, 15, 25, 0.88);
       backdrop-filter: blur(12px);
       z-index: 100;
     }
@@ -127,9 +125,8 @@
       color: var(--primary);
     }
 
-    /* Hero */
     .hero {
-      padding: clamp(3rem, 7vw, 5rem) 0 3rem;
+      padding: clamp(2.5rem, 6vw, 4.5rem) 0 2.5rem;
       text-align: center;
     }
 
@@ -144,11 +141,11 @@
       color: var(--primary);
       font-size: 0.875rem;
       font-weight: 600;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.25rem;
     }
 
     .hero h1 {
-      font-size: clamp(2.25rem, 5vw, 3.75rem);
+      font-size: clamp(2.25rem, 5vw, 3.6rem);
       font-weight: 800;
       line-height: 1.15;
       letter-spacing: -0.03em;
@@ -165,7 +162,7 @@
       font-size: clamp(1rem, 2vw, 1.2rem);
       color: var(--text-muted);
       max-width: 720px;
-      margin: 0 auto 2.5rem;
+      margin: 0 auto 2.25rem;
     }
 
     .cta-group {
@@ -173,7 +170,7 @@
       flex-wrap: wrap;
       justify-content: center;
       gap: 1rem;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.25rem;
     }
 
     .btn {
@@ -214,29 +211,18 @@
       border-color: #475569;
     }
 
-    .btn-accent {
-      background: rgba(56, 189, 248, 0.12);
-      color: var(--accent);
-      border: 1px solid rgba(56, 189, 248, 0.3);
-    }
-
-    .btn-accent:hover {
-      background: rgba(56, 189, 248, 0.2);
-    }
-
     .download-meta {
       font-size: 0.85rem;
       color: var(--text-dim);
     }
 
-    /* Section Global Headers */
     .section-wrap {
       padding: clamp(2.5rem, 5vw, 4rem) 0;
     }
 
     .section-title-wrap {
       text-align: center;
-      margin-bottom: 2.25rem;
+      margin-bottom: 2rem;
     }
 
     .section-tag {
@@ -258,12 +244,12 @@
     .section-sub {
       color: var(--text-muted);
       font-size: 1rem;
-      max-width: 650px;
+      max-width: 680px;
       margin: 0 auto;
     }
 
     /* ========================================================
-       1. TEXT CONVERTER SECTION (SH, CH, O', G' -> Ş, Ç, Ö, Ğ)
+       1. UNIVERSAL ONLINE CONVERTER (KIRILL <-> LOTIN)
        ======================================================== */
     .converter-card {
       background: var(--card-bg);
@@ -271,6 +257,44 @@
       border-radius: var(--radius-lg);
       padding: clamp(1.25rem, 3vw, 2rem);
       box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
+    }
+
+    .mode-selector {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+      background: #090e17;
+      padding: 0.5rem;
+      border-radius: var(--radius-md);
+      border: 1px solid #1e293b;
+    }
+
+    .mode-tab {
+      flex: 1 1 auto;
+      min-width: 160px;
+      text-align: center;
+      padding: 0.65rem 1rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.88rem;
+      font-weight: 700;
+      background: transparent;
+      color: var(--text-muted);
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .mode-tab:hover {
+      color: var(--text-main);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .mode-tab.active {
+      background: var(--card-bg);
+      color: var(--primary);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+      border: 1px solid var(--primary);
     }
 
     .converter-grid {
@@ -281,9 +305,7 @@
     }
 
     @media (max-width: 860px) {
-      .converter-grid {
-        grid-template-columns: 1fr;
-      }
+      .converter-grid { grid-template-columns: 1fr; }
     }
 
     .converter-pane {
@@ -406,7 +428,7 @@
     }
 
     /* ========================================================
-       2. FULL KEYBOARD PHOTO SHOWCASE (FIXED - NO CROPPING)
+       2. FULL KEYBOARD PHOTO SHOWCASE (ZERO CROPPING)
        ======================================================== */
     .photo-showcase-card {
       background: var(--card-bg);
@@ -433,7 +455,6 @@
       display: block;
       border-radius: 8px;
       box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6);
-      /* Ensures absolutely zero cropping */
       object-fit: contain;
     }
 
@@ -481,7 +502,7 @@
     }
 
     /* ========================================================
-       3. MICROSOFT WORD ADD-IN SECTION
+       3. MICROSOFT WORD RIBBON DEDICATED TAB ("VID"DAN KEYIN)
        ======================================================== */
     .word-section {
       background: linear-gradient(180deg, transparent 0%, rgba(56, 189, 248, 0.04) 50%, transparent 100%);
@@ -492,120 +513,162 @@
       border: 1px solid #1e3a5f;
       border-radius: var(--radius-lg);
       padding: clamp(1.5rem, 3.5vw, 2.5rem);
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2.5rem;
-      align-items: center;
-    }
-
-    @media (max-width: 900px) {
-      .word-card {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .word-info h3 {
-      font-size: 1.75rem;
-      font-weight: 800;
-      margin-bottom: 1rem;
-      line-height: 1.25;
-    }
-
-    .word-info h3 span {
-      color: var(--accent);
-    }
-
-    .word-features {
-      list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 0.85rem;
-      margin: 1.5rem 0 2rem;
+      gap: 2rem;
     }
 
-    .word-features li {
+    .word-header-block {
       display: flex;
+      justify-content: space-between;
       align-items: flex-start;
-      gap: 0.75rem;
-      color: var(--text-muted);
-      font-size: 0.95rem;
+      flex-wrap: wrap;
+      gap: 1.5rem;
     }
 
-    .word-features li svg {
-      flex-shrink: 0;
-      margin-top: 3px;
-      color: var(--primary);
+    .word-header-text h3 {
+      font-size: 1.85rem;
+      font-weight: 800;
+      margin-bottom: 0.75rem;
     }
 
-    .word-mockup {
+    .word-header-text h3 span { color: var(--accent); }
+
+    .word-ribbon-showcase {
       background: #0b1322;
-      border: 1px solid #1e293b;
+      border: 1px solid #334155;
       border-radius: var(--radius-md);
       overflow: hidden;
-      box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
     }
 
-    .word-ribbon-bar {
+    /* Full Office Ribbon Simulation */
+    .ribbon-tabs-bar {
       background: #1e293b;
-      padding: 0.75rem 1rem;
-      border-bottom: 1px solid #334155;
+      padding: 0 1rem;
       display: flex;
       align-items: center;
       gap: 1.5rem;
-      font-size: 0.85rem;
+      font-size: 0.88rem;
       color: #94a3b8;
+      border-bottom: 1px solid #334155;
+      overflow-x: auto;
     }
 
-    .word-ribbon-bar .active-tab {
-      color: #38bdf8;
-      font-weight: 700;
-      border-bottom: 2px solid #38bdf8;
-      padding-bottom: 4px;
+    .ribbon-tab-item {
+      padding: 0.75rem 0.5rem;
+      cursor: pointer;
+      white-space: nowrap;
     }
 
-    .word-ribbon-content {
+    .ribbon-tab-item.active {
+      color: #ffffff;
+      font-weight: 800;
+      border-bottom: 3px solid #38bdf8;
+      background: rgba(56, 189, 248, 0.08);
+    }
+
+    .ribbon-content-row {
       background: #131d31;
-      padding: 1.25rem;
+      padding: 1rem 1.5rem;
       display: flex;
-      align-items: center;
-      gap: 1rem;
+      gap: 2rem;
+      overflow-x: auto;
       border-bottom: 1px solid #1e293b;
     }
 
-    .ribbon-btn-mock {
+    .ribbon-group-box {
+      display: flex;
+      gap: 0.75rem;
+      border-right: 1px solid #334155;
+      padding-right: 1.75rem;
+      position: relative;
+    }
+
+    .ribbon-group-box:last-child {
+      border-right: none;
+      padding-right: 0;
+    }
+
+    .ribbon-group-label {
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.72rem;
+      color: #64748b;
+      white-space: nowrap;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .ribbon-btn-card {
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       gap: 0.4rem;
-      padding: 0.75rem 1.25rem;
-      background: #1e3a5f;
-      border: 1px solid #38bdf8;
-      border-radius: 6px;
-      color: #ffffff;
-      font-weight: 700;
-      font-size: 0.85rem;
-      box-shadow: 0 0 15px rgba(56, 189, 248, 0.25);
+      padding: 0.75rem 1rem;
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      min-width: 110px;
+      color: #f1f5f9;
+      cursor: pointer;
+      transition: all 0.2s;
     }
 
-    .ribbon-btn-mock svg {
+    .ribbon-btn-card:hover {
+      background: #253349;
+      border-color: #38bdf8;
+      transform: translateY(-2px);
+    }
+
+    .ribbon-btn-card.highlight {
+      background: #14304d;
+      border-color: #38bdf8;
+      color: #38bdf8;
+      box-shadow: 0 0 15px rgba(56, 189, 248, 0.2);
+    }
+
+    .ribbon-btn-card svg {
       color: #38bdf8;
     }
 
-    .word-doc-preview {
-      padding: 1.5rem;
-      font-family: 'Times New Roman', serif;
-      font-size: 1.05rem;
-      color: #cbd5e1;
-      line-height: 1.7;
+    .ribbon-btn-card span {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-align: center;
+      line-height: 1.2;
     }
 
-    .word-doc-preview mark {
-      background: rgba(16, 185, 129, 0.25);
-      color: #34d399;
-      font-weight: bold;
-      padding: 0.1rem 0.3rem;
-      border-radius: 3px;
+    /* Word Features List */
+    .word-features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .feature-box {
+      background: #0f172a;
+      border: 1px solid #1e293b;
+      padding: 1.25rem;
+      border-radius: var(--radius-md);
+    }
+
+    .feature-box h4 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 0.4rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .feature-box p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
     }
 
     /* ========================================================
@@ -635,9 +698,7 @@
       transition: border-color 0.2s;
     }
 
-    .typing-box:focus {
-      border-color: var(--accent);
-    }
+    .typing-box:focus { border-color: var(--accent); }
 
     .keyboard {
       display: flex;
@@ -677,15 +738,8 @@
       transition: all 0.1s ease;
     }
 
-    .key:hover {
-      background: #334155;
-      transform: translateY(-1px);
-    }
-
-    .key:active, .key.active {
-      transform: translateY(1px);
-      background: #475569;
-    }
+    .key:hover { background: #334155; transform: translateY(-1px); }
+    .key:active, .key.active { transform: translateY(1px); background: #475569; }
 
     .key-highlight {
       background: var(--key-highlight-bg);
@@ -700,19 +754,9 @@
     .key-w-xl { width: 100px; }
     .key-space { width: 270px; }
 
-    .key-top {
-      font-size: 0.7rem;
-      opacity: 0.75;
-      line-height: 1;
-    }
+    .key-top { font-size: 0.7rem; opacity: 0.75; line-height: 1; }
+    .key-main { font-size: 0.95rem; font-weight: 700; line-height: 1; }
 
-    .key-main {
-      font-size: 0.95rem;
-      font-weight: 700;
-      line-height: 1;
-    }
-
-    /* Steps & FAQ */
     .steps-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -742,16 +786,8 @@
       margin-bottom: 1rem;
     }
 
-    .step-card h4 {
-      font-size: 1.2rem;
-      font-weight: 700;
-      margin-bottom: 0.5rem;
-    }
-
-    .step-card p {
-      color: var(--text-muted);
-      font-size: 0.95rem;
-    }
+    .step-card h4 { font-size: 1.2rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .step-card p { color: var(--text-muted); font-size: 0.95rem; }
 
     .faq-grid {
       display: flex;
@@ -768,19 +804,9 @@
       padding: 1.25rem 1.5rem;
     }
 
-    .faq-item h4 {
-      font-size: 1.1rem;
-      font-weight: 700;
-      margin-bottom: 0.4rem;
-      color: var(--text-main);
-    }
+    .faq-item h4 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.4rem; color: var(--text-main); }
+    .faq-item p { color: var(--text-muted); font-size: 0.95rem; }
 
-    .faq-item p {
-      color: var(--text-muted);
-      font-size: 0.95rem;
-    }
-
-    /* Footer */
     footer {
       margin-top: auto;
       border-top: 1px solid rgba(255, 255, 255, 0.05);
@@ -790,10 +816,7 @@
       font-size: 0.9rem;
     }
 
-    footer a {
-      color: var(--primary);
-      text-decoration: none;
-    }
+    footer a { color: var(--primary); text-decoration: none; }
 
     @media (max-width: 768px) {
       .nav-links { display: none; }
@@ -812,9 +835,9 @@
           <span class="brand-badge">WIN & OFFICE</span>
         </a>
         <div class="nav-links">
-          <a href="#konvertor">Onlayn Konvertor</a>
-          <a href="#xarita">Klaviatura Surat</a>
+          <a href="#konvertor">Kirill & Lotin Konvertor</a>
           <a href="#word-addin">Word Qo'shimchasi</a>
+          <a href="#xarita">Klaviatura Surat</a>
           <a href="#simulator">Simulyator</a>
           <a href="#ornatish">O'rnatish</a>
           <a href="https://github.com/Ravshon/yangi-alifbo" target="_blank">GitHub</a>
@@ -831,11 +854,11 @@
           <span>🇺🇿</span> O'zbekistonning yangi lotin alifbosi (Ö, Ğ, Ş, Ç)
         </div>
         <h1>
-          Yangi alifboga o'tish<br>
-          <span>endi bir zumda va bitta klikda!</span>
+          Yangi alifboga to'liq o'tish<br>
+          <span>Windows, Word va Onlayn yechim!</span>
         </h1>
         <p class="hero-desc">
-          Windows tizimi uchun klaviatura drayveri, onlayn matn konvertori va Microsoft Word uchun 1-bosishda butun hujjatni yangi alifboga o'girib beruvchi maxsus qo'shimcha.
+          Kirill va Lotin (eski va yangi) o'rtasida ikki tomonlama konvertor, Windows klaviatura drayveri va Microsoft Word dasturi uchun <strong>"Вид"</strong> lentasidan keyin joylashuvchi maxsus 1-klikli qo'shimcha.
         </p>
         <div class="cta-group">
           <a href="https://github.com/Ravshon/yangi-alifbo/releases/download/v1.0.0/YangiAlifbo_Setup.exe" class="btn btn-primary">
@@ -844,7 +867,7 @@
           </a>
           <a href="#konvertor" class="btn btn-secondary">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></svg>
-            Onlayn matn konvertori
+            Kirill & Lotin Konvertor
           </a>
         </div>
         <div class="download-meta">
@@ -854,30 +877,39 @@
     </section>
 
     <!-- ========================================================
-         1. ONLAYN MATN KONVERTORI
+         1. UNIVERSAL ONLAYN KONVERTOR (KIRILL <-> LOTIN)
          ======================================================== -->
     <section class="section-wrap" id="konvertor">
       <div class="container">
         <div class="section-title-wrap">
-          <div class="section-tag">Avtomatik Konvertor</div>
-          <h2 class="section-title">Matnni yangi alifboga o'girish</h2>
+          <div class="section-tag">Universal Konvertor</div>
+          <h2 class="section-title">Kirill va Lotin matnlarini o'girish</h2>
           <p class="section-sub">
-            Eski alifbodagi (<strong>SH, CH, O', G'</strong>) har qanday matnni darhol yangi alifboga (<strong>Ş, Ç, Ö, Ğ</strong>) o'tkazing!
+            Kerakli yo'nalishni tanlang: Kirilldan Yangi/Eski Lotinga yoki Lotindan (yangi/eski) Kirill alifbosiga avtomatik o'giradi!
           </p>
         </div>
 
         <div class="converter-card">
+          <!-- Mode Tabs -->
+          <div class="mode-selector">
+            <button class="mode-tab active" data-mode="cyrToNewLat">🇷🇺 Kirill ➔ 🇺🇿 Yangi Lotin (Ş, Ç, Ö, Ğ)</button>
+            <button class="mode-tab" data-mode="cyrToOldLat">🇷🇺 Kirill ➔ 🇺🇿 Eski Lotin (Sh, Ch, O', G')</button>
+            <button class="mode-tab" data-mode="latToCyr">🇺🇿 Lotin ➔ 🇷🇺 Kirill (Har qanday lotin)</button>
+            <button class="mode-tab" data-mode="oldToNewLat">Eski Lotin ➔ Yangi Lotin</button>
+            <button class="mode-tab" data-mode="newToOldLat">Yangi Lotin ➔ Eski Lotin</button>
+          </div>
+
           <div class="converter-grid">
             <!-- Left Pane: Input -->
             <div class="converter-pane">
               <div class="pane-header">
                 <div class="pane-label" id="lblInputMode">
-                  <span>📝 Eski alifbo</span>
-                  <span class="pane-badge">Sh, Ch, O', G'</span>
+                  <span>📝 Kiruvchi matn</span>
+                  <span class="pane-badge" id="badgeInput">Kirill</span>
                 </div>
                 <button class="btn btn-secondary btn-sm" id="btnClear" title="Maydonni tozalash">Tozalash</button>
               </div>
-              <textarea id="txtInput" class="converter-textarea" placeholder="Shu yerga eski alifbodagi matningizni yozing yoki joylang (Ctrl+V)... Masalan: O'zbekiston bo'ylab shiddatli o'zgarishlar va g'alabalar sari shoshilmoqdamiz."></textarea>
+              <textarea id="txtInput" class="converter-textarea" placeholder="Shu yerga matnni kiriting yoki joylang (Ctrl+V)..."></textarea>
             </div>
 
             <!-- Middle Actions: Swap button -->
@@ -891,15 +923,15 @@
             <div class="converter-pane">
               <div class="pane-header">
                 <div class="pane-label" id="lblOutputMode">
-                  <span>✨ Yangi alifbo</span>
-                  <span class="pane-badge" style="color:var(--accent);">Ş, Ç, Ö, Ğ</span>
+                  <span>✨ O'girilgan natija</span>
+                  <span class="pane-badge" id="badgeOutput" style="color:var(--accent);">Yangi Lotin</span>
                 </div>
                 <button class="btn btn-primary btn-sm" id="btnCopy">
                   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
                   <span id="copyBtnText">Nusxa olish</span>
                 </button>
               </div>
-              <textarea id="txtOutput" class="converter-textarea output" readonly placeholder="Natija shu yerda darhol aks etadi..."></textarea>
+              <textarea id="txtOutput" class="converter-textarea output" readonly placeholder="O'girilgan natija darhol aks etadi..."></textarea>
             </div>
           </div>
 
@@ -908,10 +940,10 @@
             <div class="stats-info">
               <div class="stats-item">Belgilar: <span id="statChars">0</span></div>
               <div class="stats-item">So'zlar: <span id="statWords">0</span></div>
-              <div class="stats-item">O'zgartirilgan harflar: <span id="statModified">0</span></div>
+              <div class="stats-item">Almashtirishlar: <span id="statModified">0</span></div>
             </div>
             <div class="btn-tools">
-              <button class="btn btn-secondary btn-sm" id="btnSampleText">Namunaviy matnni kiritish</button>
+              <button class="btn btn-secondary btn-sm" id="btnSampleText">Namunaviy matn</button>
             </div>
           </div>
         </div>
@@ -919,7 +951,104 @@
     </section>
 
     <!-- ========================================================
-         2. TO'LIQ KLAVIATURA SURATI (KESILMAYDIGAN KENG KO'RINISh)
+         2. MICROSOFT WORD: "VID"DAN KEYIN DEDICATED TAB ("YANGI ALIFBO")
+         ======================================================== -->
+    <section class="section-wrap word-section" id="word-addin">
+      <div class="container">
+        <div class="word-card">
+          <div class="word-header-block">
+            <div class="word-header-text">
+              <div class="pill-badge" style="background:rgba(56, 189, 248, 0.1); border-color:rgba(56, 189, 248, 0.3); color:var(--accent);">
+                Microsoft Word • "Вид"dan keyingi yangi menyu
+              </div>
+              <h3>Word dasturida <span>"Yangi Alifbo"</span> lentasi bilan to'liq boshqaruv!</h3>
+              <p style="color:var(--text-muted); max-width:750px;">
+                Foydalanuvchi iltimosiga asosan, tugmalar "Главная" sahifasiga tiqishtirilmadi! Buning o'rniga Word menyusida <strong>"Вид" (View)</strong> lentasidan keyin alohida <strong>"Yangi Alifbo"</strong> bo'limi ochildi va barcha buyruqlar chiroyli yirik Office ikonkalari bilan guruhlandi:
+              </p>
+            </div>
+            <div>
+              <a href="https://github.com/Ravshon/yangi-alifbo/releases/download/v1.0.0/YangiAlifbo_Setup.exe" class="btn btn-primary">
+                Word qo'shimchasini o'rnatish
+              </a>
+            </div>
+          </div>
+
+          <!-- Interactive Ribbon Showcase Mockup -->
+          <div class="word-ribbon-showcase">
+            <!-- Ribbon Tabs Navigation -->
+            <div class="ribbon-tabs-bar">
+              <div class="ribbon-tab-item">Файл</div>
+              <div class="ribbon-tab-item">Главная</div>
+              <div class="ribbon-tab-item">Вставка</div>
+              <div class="ribbon-tab-item">Дизайн</div>
+              <div class="ribbon-tab-item">Макет</div>
+              <div class="ribbon-tab-item">Ссылки</div>
+              <div class="ribbon-tab-item">Рассылки</div>
+              <div class="ribbon-tab-item">Рецензирование</div>
+              <div class="ribbon-tab-item">Вид</div>
+              <div class="ribbon-tab-item active">✨ Yangi Alifbo</div>
+            </div>
+
+            <!-- Ribbon Group Content: 3 distinct visual groups -->
+            <div class="ribbon-content-row">
+              <!-- Group 1: Lotin alifbosi -->
+              <div class="ribbon-group-box">
+                <div class="ribbon-btn-card highlight" title="Eski Lotin -> Yangi Lotin">
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                  <span>Yangi alifboga<br>o'girish</span>
+                </div>
+                <div class="ribbon-btn-card" title="Yangi Lotin -> Eski Lotin">
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7v6h6"/><path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13"/></svg>
+                  <span>Eski alifboga<br>o'girish</span>
+                </div>
+                <div class="ribbon-group-label">Lotin Alifbosi</div>
+              </div>
+
+              <!-- Group 2: Kirilldan Lotinga -->
+              <div class="ribbon-group-box">
+                <div class="ribbon-btn-card highlight" title="Kirill yozuvidagi matnni to'g'ridan-to'g'ri Yangi Lotinga o'giradi">
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+                  <span>Kirill ➔<br>Yangi Lotin</span>
+                </div>
+                <div class="ribbon-btn-card" title="Kirill yozuvidagi matnni Eski Lotinga o'giradi">
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/></svg>
+                  <span>Kirill ➔<br>Eski Lotin</span>
+                </div>
+                <div class="ribbon-group-label">Kirilldan Lotinga</div>
+              </div>
+
+              <!-- Group 3: Lotindan Kirillga -->
+              <div class="ribbon-group-box">
+                <div class="ribbon-btn-card highlight" title="Yangi yoki eski lotin matnini to'g'ri Kirillga o'giradi">
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3v18"/><path d="M16 3v18"/><path d="M4 12h16"/></svg>
+                  <span>Lotin ➔<br>Kirill</span>
+                </div>
+                <div class="ribbon-group-label">Lotindan Kirillga</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Feature Details -->
+          <div class="word-features-grid">
+            <div class="feature-box">
+              <h4>🎯 Bitta tugma bilan tanlov</h4>
+              <p>Kirill matnini Yangi Lotinga (Ö, Ğ, Ş, Ç) yoki Eski Lotinga (Sh, Ch, O', G') o'tkazishni alohida tugmalar orqali xohlaganingizcha tanlaysiz.</p>
+            </div>
+            <div class="feature-box">
+              <h4>✨ Lotinning har ikki varianti bilan ishlaydi</h4>
+              <p>Lotindan Kirillga o'girayotganda matn yangi alifboda bo'ladimi yoki eski alifbodami — dastur avtomatik to'g'ri Kirillga aylantiradi.</p>
+            </div>
+            <div class="feature-box">
+              <h4>🛡️ Hujjat formatini asraydi</h4>
+              <p>Butun hujjatdagi barcha shriftlar, jadvallar, ranglar, qalin (bold) va kursiv bezaklar zarracha buzilmaydi!</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================
+         3. TO'LIQ KLAVIATURA SURATI (KESILMAYDIGAN KENG KO'RINISh)
          ======================================================== -->
     <section class="section-wrap" id="xarita">
       <div class="container">
@@ -932,12 +1061,10 @@
         </div>
 
         <div class="photo-showcase-card">
-          <!-- Full Keyboard Image Display Frame -->
           <div class="photo-display-frame">
             <img src="keyboard.png" alt="O'zbekcha yangi alifbo klaviaturasining to'liq fotosurati" class="full-keyboard-img">
           </div>
 
-          <!-- Legend details below image -->
           <div class="photo-legend-grid">
             <div class="legend-item">
               <div class="legend-badge">[</div>
@@ -992,73 +1119,6 @@
     </section>
 
     <!-- ========================================================
-         3. MICROSOFT OFFICE (WORD) UCHUN 1-KLIKLI QO'ShIMChA
-         ======================================================== -->
-    <section class="section-wrap word-section" id="word-addin">
-      <div class="container">
-        <div class="word-card">
-          <div class="word-info">
-            <div class="pill-badge" style="background:rgba(56, 189, 248, 0.1); border-color:rgba(56, 189, 248, 0.3); color:var(--accent);">
-              Microsoft Word • 1-klik
-            </div>
-            <h3>Word dasturida <span>bitta tugma</span> bilan butun hujjatni o'zgartiring!</h3>
-            <p style="color:var(--text-muted);">
-              Eski alifboda yozilgan yuzlab sahifali Word hujjatlarini qo'lda tuzatib chiqish shart emas. Microsoft Word lentasida paydo bo'ladigan tugmani bir marta bosish kifoya:
-            </p>
-
-            <ul class="word-features">
-              <li>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-                <span><strong>Formatlashni saqlaydi:</strong> Shriftlar, ranglar, jadvallar, qalin (bold) va kursiv matnlar o'zgarmaydi.</span>
-              </li>
-              <li>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-                <span><strong>Barcha apostroflarni taniydi:</strong> Standart va xalqaro Unicode okinasi (ʻ, ’, ‘, ') hammasini aniq qamrab oladi.</span>
-              </li>
-              <li>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-                <span><strong>Eski holatiga qaytarish (Undo):</strong> Xohlasangiz bitta tugma bilan yana eski alifboga qaytarishingiz mumkin.</span>
-              </li>
-            </ul>
-
-            <div style="display:flex; flex-wrap:wrap; gap:1rem;">
-              <a href="https://github.com/Ravshon/yangi-alifbo/releases/download/v1.0.0/YangiAlifbo_Setup.exe" class="btn btn-primary">
-                O'rnatuvchi bilan birga o'rnatish
-              </a>
-              <a href="Word_YangiAlifbo_Addin.zip" class="btn btn-secondary" download>
-                Faqat Word Add-in (.zip)
-              </a>
-            </div>
-          </div>
-
-          <!-- Mockup of Word Ribbon -->
-          <div class="word-mockup">
-            <div class="word-ribbon-bar">
-              <span>Fayl</span>
-              <span class="active-tab">Bosh sahifa (Home)</span>
-              <span>Qo'yish</span>
-              <span>Dizayn</span>
-              <span>Ko'rinish</span>
-            </div>
-            <div class="word-ribbon-content">
-              <div class="ribbon-btn-mock">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></svg>
-                <span>Yangi alifboga o'girish</span>
-              </div>
-              <div style="font-size:0.8rem; color:#64748b; line-height:1.4;">
-                👈 Word lentasidagi maxsus tugma.<br>
-                1 marta bosilsa butun hujjat yangi alifboga o'tadi!
-              </div>
-            </div>
-            <div class="word-doc-preview">
-              <p>...<mark>Özbekiston</mark> Respublikasi yangi lotin alifbosiga muvofiq, <mark>şahar</mark> va <mark>çoyxonalarda</mark> barcha yozuvlar <mark>ğalaba</mark> sari yangilanmoqda...</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ========================================================
          4. INTERAKTIV KLAVIATURA SIMULYaTORI
          ======================================================== -->
     <section class="section-wrap" id="simulator">
@@ -1073,12 +1133,8 @@
           <textarea id="liveTextarea" class="typing-box" placeholder="Shu yerga yozib ko'ring: [ tugmasi 'ö', ] tugmasi 'ğ', ; tugmasi 'ş', ' tugmasi 'ç' chiqaradi..."></textarea>
 
           <div class="keyboard" id="visualKeyboard">
-            <!-- Row 1: Tilde and numbers -->
             <div class="kb-row">
-              <div class="key key-w-sm key-highlight" data-key="Backquote">
-                <span class="key-top">"</span>
-                <span class="key-main">'</span>
-              </div>
+              <div class="key key-w-sm key-highlight" data-key="Backquote"><span class="key-top">"</span><span class="key-main">'</span></div>
               <div class="key key-w-sm" data-key="Digit1"><span class="key-top">!</span><span class="key-main">1</span></div>
               <div class="key key-w-sm" data-key="Digit2"><span class="key-top">@</span><span class="key-main">2</span></div>
               <div class="key key-w-sm" data-key="Digit3"><span class="key-top">#</span><span class="key-main">3</span></div>
@@ -1094,7 +1150,6 @@
               <div class="key key-w-md" data-key="Backspace"><span class="key-main" style="font-size:0.75rem;">Backspace</span></div>
             </div>
 
-            <!-- Row 2: QWERTY + Ö + Ğ + :; -->
             <div class="kb-row">
               <div class="key key-w-md" data-key="Tab"><span class="key-main" style="font-size:0.75rem;">Tab</span></div>
               <div class="key key-w-sm" data-key="KeyQ"><span class="key-main">Q</span></div>
@@ -1112,7 +1167,6 @@
               <div class="key key-w-sm key-highlight" data-key="Backslash"><span class="key-top">:</span><span class="key-main">;</span></div>
             </div>
 
-            <!-- Row 3: ASDF + Ş + Ç -->
             <div class="kb-row">
               <div class="key key-w-lg" data-key="CapsLock"><span class="key-main" style="font-size:0.75rem;">CapsLock</span></div>
               <div class="key key-w-sm" data-key="KeyA"><span class="key-main">A</span></div>
@@ -1129,7 +1183,6 @@
               <div class="key key-w-lg" data-key="Enter"><span class="key-main" style="font-size:0.75rem;">Enter</span></div>
             </div>
 
-            <!-- Row 4: ZXCV -->
             <div class="kb-row">
               <div class="key key-w-xl" data-key="ShiftLeft"><span class="key-main" style="font-size:0.75rem;">Shift</span></div>
               <div class="key key-w-sm" data-key="KeyZ"><span class="key-main">Z</span></div>
@@ -1145,7 +1198,6 @@
               <div class="key key-w-xl" data-key="ShiftRight"><span class="key-main" style="font-size:0.75rem;">Shift</span></div>
             </div>
 
-            <!-- Row 5: Space -->
             <div class="kb-row">
               <div class="key key-w-md"><span class="key-main" style="font-size:0.75rem;">Ctrl</span></div>
               <div class="key key-w-md"><span class="key-main" style="font-size:0.75rem;">Win</span></div>
@@ -1163,7 +1215,7 @@
     <section class="section-wrap" id="ornatish">
       <div class="container">
         <div class="section-title-wrap">
-          <div class="section-tag">Oddiy Qadamlar</div>
+          <div class="section-tag">O'rnatish</div>
           <h2 class="section-title">Qanday o'rnatiladi?</h2>
           <p class="section-sub">Klaviatura va Word qo'shimchasi bitta dastur orqali o'rnatiladi</p>
         </div>
@@ -1182,7 +1234,7 @@
           <div class="step-card">
             <div class="step-number">3</div>
             <h4>Foydalanishni boshlang</h4>
-            <p>Klaviaturada <strong>Win + Bo'sh joy</strong> (Space) tugmalarini bosib <strong>"Uzbek - new"</strong> ni tanlang, Word'da esa "Bosh sahifa" lentasidagi tugmadan foydalaning!</p>
+            <p>Klaviaturada <strong>Win + Bo'sh joy</strong> (Space) tugmalarini bosib <strong>"Uzbek - new"</strong> ni tanlang, Word'da esa "Вид" lentasidan keyingi <strong>"Yangi Alifbo"</strong> bo'limidan foydalaning!</p>
           </div>
         </div>
       </div>
@@ -1197,16 +1249,16 @@
 
         <div class="faq-grid">
           <div class="faq-item">
+            <h4>Word dasturida yangi bo'lim qayerda paydo bo'ladi?</h4>
+            <p>Word dasturini ochganingizda, yuqoridagi <strong>"Вид" (View)</strong> lentasidan keyin darhol <strong>"Yangi Alifbo"</strong> nomli alohida tab paydo bo'ladi.</p>
+          </div>
+          <div class="faq-item">
+            <h4>Eski lotin matnlarini ham Kirillga to'g'ri o'tkazadimi?</h4>
+            <p>Ha! Matn xoh eski lotinda (Sh, Ch, O', G') yozilgan bo'lsin, xoh yangi lotinda (Ş, Ç, Ö, Ğ) — "Lotindan Kirillga" tugmasi ikkalasini ham 100% to'g'ri Kirillga o'giradi.</p>
+          </div>
+          <div class="faq-item">
             <h4>Dasturchilar uchun qavslar ([ ] { }) qayerga ketdi?</h4>
             <p>Barcha dasturlash qavslari o'z joyida saqlangan! Ularni yozish uchun o'ng tomondagi <strong>AltGr (o'ng Alt)</strong> tugmasini bosib turing. Masalan: <code>AltGr + ö</code> tugmasi <code>[</code> belgisini, <code>AltGr + Shift + ö</code> esa <code>{</code> belgisini chiqaradi.</p>
-          </div>
-          <div class="faq-item">
-            <h4>Microsoft Word dasturida tugma qayerda ko'rinadi?</h4>
-            <p>Word dasturini ochganingizda, eng birinchi <strong>"Bosh sahifa" (Home)</strong> menyusining o'ng tomonida yangi <strong>"Yangi alifboga o'girish"</strong> tugmasi paydo bo'ladi.</p>
-          </div>
-          <div class="faq-item">
-            <h4>Keyinchalik o'chirib tashlash mumkinmi?</h4>
-            <p>Ha, albatta. <code>YangiAlifbo_Setup.exe</code> faylini qayta ochib "O'chirish" tugmasini bosishingiz yoki Windows Sozlamalaridagi "O'rnatilgan ilovalar" bo'limidan bir zumda o'chirishingiz mumkin.</p>
           </div>
         </div>
       </div>
@@ -1222,32 +1274,193 @@
 
   <script>
     /* ========================================================
-       ONLINE TEXT CONVERTER LOGIC (SH, CH, O', G' <-> Ş, Ç, Ö, Ğ)
+       FULL BIDIRECTIONAL TRANSLITERATION ENGINE
+       Modes:
+         - 'cyrToNewLat'
+         - 'cyrToOldLat'
+         - 'latToCyr'
+         - 'oldToNewLat'
+         - 'newToOldLat'
        ======================================================== */
-    let convertMode = 'oldToNew'; // 'oldToNew' or 'newToOld'
-
-    const txtInput = document.getElementById('txtInput');
-    const txtOutput = document.getElementById('txtOutput');
-    const btnSwap = document.getElementById('btnSwap');
-    const btnClear = document.getElementById('btnClear');
-    const btnCopy = document.getElementById('btnCopy');
-    const copyBtnText = document.getElementById('copyBtnText');
-    const btnSampleText = document.getElementById('btnSampleText');
-    const lblInputMode = document.getElementById('lblInputMode');
-    const lblOutputMode = document.getElementById('lblOutputMode');
-    const statChars = document.getElementById('statChars');
-    const statWords = document.getElementById('statWords');
-    const statModified = document.getElementById('statModified');
-
-    // All possible apostrophes used in Uzbek Latin:
-    // ' (39), ‘ (8216), ’ (8217), ʻ (699), ʼ (700), ` (96), ´ (180)
+    const CYR_VOWELS = "аоуиэеёюяўАОУИЭЕЁЮЯЎ";
     const apoPattern = "['\u2018\u2019\u02BB\u02BC`\u00B4]";
 
-    function convertOldToNew(text) {
+    function cyrillicToLatin(text, isNew) {
       if (!text) return { result: '', count: 0 };
       let count = 0;
+      const out = [];
+      const n = text.length;
+      let i = 0;
 
-      // 1. Sh / Ch conversion
+      while (i < n) {
+        const c = text[i];
+        const prev = i > 0 ? text[i - 1] : ' ';
+        const next = i + 1 < n ? text[i + 1] : ' ';
+
+        // Ye / ye contextual
+        if (c === 'Е' || c === 'е') {
+          const isStartOrVowel = (i === 0) || CYR_VOWELS.includes(prev) || "ъЬЪь \t\n\r\"'«»(—–-.,!?:;".includes(prev);
+          if (isStartOrVowel) {
+            count++;
+            if (c === 'Е') out.append ? out.push(next === next.toUpperCase() && next !== ' ' ? 'YE' : 'Ye') : out.push(next === next.toUpperCase() && next !== ' ' ? 'YE' : 'Ye');
+            else out.push('ye');
+          } else {
+            out.push(c === 'Е' ? 'E' : 'e');
+          }
+          i++; continue;
+        }
+
+        // Yo, Yu, Ya, Ts
+        if (c === 'Ё' || c === 'ё') { count++; out.push(c === 'Ё' ? (next === next.toUpperCase() && next !== ' ' ? 'YO' : 'Yo') : 'yo'); i++; continue; }
+        if (c === 'Ю' || c === 'ю') { count++; out.push(c === 'Ю' ? (next === next.toUpperCase() && next !== ' ' ? 'YU' : 'Yu') : 'yu'); i++; continue; }
+        if (c === 'Я' || c === 'я') { count++; out.push(c === 'Я' ? (next === next.toUpperCase() && next !== ' ' ? 'YA' : 'Ya') : 'ya'); i++; continue; }
+        if (c === 'Ц' || c === 'ц') { count++; out.push(c === 'Ц' ? (next === next.toUpperCase() && next !== ' ' ? 'TS' : 'Ts') : 'ts'); i++; continue; }
+
+        // Sh / Ş
+        if ("ШшЩщ".includes(c)) {
+          count++;
+          if (isNew) {
+            out.push("ШЩ".includes(c) ? 'Ş' : 'ş');
+          } else {
+            out.push("ШЩ".includes(c) ? (next === next.toUpperCase() && next !== ' ' ? 'SH' : 'Sh') : 'sh');
+          }
+          i++; continue;
+        }
+
+        // Ch / Ç
+        if (c === 'Ч' || c === 'ч') {
+          count++;
+          if (isNew) {
+            out.push(c === 'Ч' ? 'Ç' : 'ç');
+          } else {
+            out.push(c === 'Ч' ? (next === next.toUpperCase() && next !== ' ' ? 'CH' : 'Ch') : 'ch');
+          }
+          i++; continue;
+        }
+
+        // O' / Ö
+        if (c === 'Ў' || c === 'ў') {
+          count++;
+          if (isNew) {
+            out.push(c === 'Ў' ? 'Ö' : 'ö');
+          } else {
+            out.push(c === 'Ў' ? "O'" : "o'");
+          }
+          i++; continue;
+        }
+
+        // G' / Ğ
+        if (c === 'Ғ' || c === 'ғ') {
+          count++;
+          if (isNew) {
+            out.push(c === 'Ғ' ? 'Ğ' : 'ğ');
+          } else {
+            out.push(c === 'Ғ' ? "G'" : "g'");
+          }
+          i++; continue;
+        }
+
+        if (c === 'Ъ' || c === 'ъ') { count++; out.push("'"); i++; continue; }
+        if (c === 'Ь' || c === 'ь') { i++; continue; }
+
+        const map = {
+          'А':'A','а':'a','Б':'B','б':'b','В':'V','в':'v','Г':'G','г':'g',
+          'Д':'D','д':'d','Ж':'J','ж':'j','З':'Z','з':'z','И':'I','и':'i',
+          'Й':'Y','й':'y','К':'K','к':'k','Л':'L','л':'l','М':'M','м':'m',
+          'Н':'N','н':'n','О':'O','о':'o','П':'P','п':'p','Р':'R','р':'r',
+          'С':'S','с':'s','Т':'T','т':'t','У':'U','у':'u','Ф':'F','ф':'f',
+          'Х':'X','х':'x','Ҳ':'H','ҳ':'h','Қ':'Q','қ':'q','Э':'E','э':'e'
+        };
+        out.push(map[c] || c);
+        i++;
+      }
+      return { result: out.join(''), count };
+    }
+
+    function latinToCyrillic(text) {
+      if (!text) return { result: '', count: 0 };
+      let count = 0;
+      let t = text;
+
+      // 1. Both Old & New Latin: O' and G'
+      const reO = new RegExp('O' + apoPattern, 'g');
+      const reo = new RegExp('o' + apoPattern, 'g');
+      const reG = new RegExp('G' + apoPattern, 'g');
+      const reg = new RegExp('g' + apoPattern, 'g');
+
+      t = t.replace(reO, () => { count++; return 'Ў'; })
+           .replace(reo, () => { count++; return 'ў'; })
+           .replace(reG, () => { count++; return 'Ғ'; })
+           .replace(reg, () => { count++; return 'ғ'; });
+
+      // Direct New Latin
+      t = t.replace(/Ö/g, () => { count++; return 'Ў'; })
+           .replace(/ö/g, () => { count++; return 'ў'; })
+           .replace(/Ğ/g, () => { count++; return 'Ғ'; })
+           .replace(/ğ/g, () => { count++; return 'ғ'; })
+           .replace(/Ş/g, () => { count++; return 'Ш'; })
+           .replace(/ş/g, () => { count++; return 'ш'; })
+           .replace(/Ç/g, () => { count++; return 'Ч'; })
+           .replace(/ç/g, () => { count++; return 'ч'; });
+
+      // Old Latin Digraphs
+      t = t.replace(/SH(?=[A-ZÖĞŞÇА-Я])/g, 'Ш')
+           .replace(/SH/g, 'Ш').replace(/Sh/g, 'Ш').replace(/sh/g, 'ш')
+           .replace(/CH(?=[A-ZÖĞŞÇА-Я])/g, 'Ч')
+           .replace(/CH/g, 'Ч').replace(/Ch/g, 'Ч').replace(/ch/g, 'ч')
+           .replace(/YO(?=[A-ZÖĞŞÇА-Я])/g, 'Ё')
+           .replace(/YO/g, 'Ё').replace(/Yo/g, 'Ё').replace(/yo/g, 'ё')
+           .replace(/YU(?=[A-ZÖĞŞÇА-Я])/g, 'Ю')
+           .replace(/YU/g, 'Ю').replace(/Yu/g, 'Ю').replace(/yu/g, 'ю')
+           .replace(/YA(?=[A-ZÖĞŞÇА-Я])/g, 'Я')
+           .replace(/YA/g, 'Я').replace(/Ya/g, 'Я').replace(/ya/g, 'я')
+           .replace(/YE(?=[A-ZÖĞŞÇА-Я])/g, 'Е')
+           .replace(/YE/g, 'Е').replace(/Ye/g, 'Е').replace(/ye/g, 'е')
+           .replace(/TS(?=[A-ZÖĞŞÇА-Я])/g, 'Ц')
+           .replace(/TS/g, 'Ц').replace(/Ts/g, 'Ц').replace(/ts/g, 'ц');
+
+      // Character-by-character for contextual E/e and single letters
+      const out = [];
+      const n = t.length;
+      const LAT_CONSONANTS = "bvgdjzylmnprstfqxkhcBVGDJZYLMNPRSTFQXKHC";
+
+      let i = 0;
+      while (i < n) {
+        const c = t[i];
+        const prev = i > 0 ? t[i - 1] : ' ';
+
+        if (c === 'E' || c === 'e') {
+          if (LAT_CONSONANTS.includes(prev)) {
+            out.push(c === 'E' ? 'Е' : 'е');
+          } else {
+            out.push(c === 'E' ? 'Э' : 'э');
+          }
+          i++; continue;
+        }
+
+        if ("'\u2018\u2019\u02BB\u02BC`\u00B4".includes(c)) {
+          out.push('ъ');
+          i++; continue;
+        }
+
+        const map = {
+          'A':'А','a':'а','B':'Б','b':'б','D':'Д','d':'д','F':'Ф','f':'ф',
+          'G':'Г','g':'г','H':'Ҳ','h':'ҳ','I':'И','i':'и','J':'Ж','j':'ж',
+          'K':'Қ','k':'қ','L':'Л','l':'л','M':'М','m':'м','N':'Н','n':'н',
+          'O':'О','o':'о','P':'П','p':'п','Q':'Қ','q':'қ','R':'Р','r':'р',
+          'S':'С','s':'с','T':'Т','t':'т','U':'У','u':'у','V':'В','v':'в',
+          'X':'Х','x':'х','Y':'Й','y':'й','Z':'З','z':'з'
+        };
+        out.push(map[c] || c);
+        i++;
+      }
+
+      return { result: out.join(''), count };
+    }
+
+    function oldToNewLatin(text) {
+      if (!text) return { result: '', count: 0 };
+      let count = 0;
       let res = text
         .replace(/SH/g, () => { count++; return 'Ş'; })
         .replace(/Sh/g, () => { count++; return 'Ş'; })
@@ -1256,25 +1469,24 @@
         .replace(/Ch/g, () => { count++; return 'Ç'; })
         .replace(/ch/g, () => { count++; return 'ç'; });
 
-      // 2. O' and G' conversion
-      const reO_cap = new RegExp('O' + apoPattern, 'g');
-      const reO_low = new RegExp('o' + apoPattern, 'g');
-      const reG_cap = new RegExp('G' + apoPattern, 'g');
-      const reG_low = new RegExp('g' + apoPattern, 'g');
+      const reO = new RegExp('O' + apoPattern, 'g');
+      const reo = new RegExp('o' + apoPattern, 'g');
+      const reG = new RegExp('G' + apoPattern, 'g');
+      const reg = new RegExp('g' + apoPattern, 'g');
 
       res = res
-        .replace(reO_cap, () => { count++; return 'Ö'; })
-        .replace(reO_low, () => { count++; return 'ö'; })
-        .replace(reG_cap, () => { count++; return 'Ğ'; })
-        .replace(reG_low, () => { count++; return 'ğ'; });
+        .replace(reO, () => { count++; return 'Ö'; })
+        .replace(reo, () => { count++; return 'ö'; })
+        .replace(reG, () => { count++; return 'Ğ'; })
+        .replace(reg, () => { count++; return 'ğ'; });
 
       return { result: res, count };
     }
 
-    function convertNewToOld(text) {
+    function newToOldLatin(text) {
       if (!text) return { result: '', count: 0 };
       let count = 0;
-      let res = text
+      const res = text
         .replace(/Ş/g, () => { count++; return 'Sh'; })
         .replace(/ş/g, () => { count++; return 'sh'; })
         .replace(/Ç/g, () => { count++; return 'Ch'; })
@@ -1287,36 +1499,88 @@
       return { result: res, count };
     }
 
-    function processConversion() {
-      const input = txtInput.value;
-      const { result, count } = convertMode === 'oldToNew' ? convertOldToNew(input) : convertNewToOld(input);
-      txtOutput.value = result;
+    /* UI Controller */
+    let currentMode = 'cyrToNewLat';
 
-      // Update stats
-      statChars.innerText = input.length;
-      statWords.innerText = input.trim() ? input.trim().split(/\s+/).length : 0;
-      statModified.innerText = count;
+    const txtInput = document.getElementById('txtInput');
+    const txtOutput = document.getElementById('txtOutput');
+    const btnClear = document.getElementById('btnClear');
+    const btnCopy = document.getElementById('btnCopy');
+    const copyBtnText = document.getElementById('copyBtnText');
+    const btnSwap = document.getElementById('btnSwap');
+    const btnSampleText = document.getElementById('btnSampleText');
+    const badgeInput = document.getElementById('badgeInput');
+    const badgeOutput = document.getElementById('badgeOutput');
+    const statChars = document.getElementById('statChars');
+    const statWords = document.getElementById('statWords');
+    const statModified = document.getElementById('statModified');
+    const modeTabs = document.querySelectorAll('.mode-tab');
+
+    function updateModeBadges() {
+      if (currentMode === 'cyrToNewLat') {
+        badgeInput.innerText = 'Kirill';
+        badgeOutput.innerText = 'Yangi Lotin';
+      } else if (currentMode === 'cyrToOldLat') {
+        badgeInput.innerText = 'Kirill';
+        badgeOutput.innerText = 'Eski Lotin';
+      } else if (currentMode === 'latToCyr') {
+        badgeInput.innerText = 'Lotin (Har qanday)';
+        badgeOutput.innerText = 'Kirill';
+      } else if (currentMode === 'oldToNewLat') {
+        badgeInput.innerText = 'Eski Lotin';
+        badgeOutput.innerText = 'Yangi Lotin';
+      } else if (currentMode === 'newToOldLat') {
+        badgeInput.innerText = 'Yangi Lotin';
+        badgeOutput.innerText = 'Eski Lotin';
+      }
     }
 
-    txtInput.addEventListener('input', processConversion);
+    function executeConversion() {
+      const input = txtInput.value;
+      let out = { result: '', count: 0 };
 
-    // Swap conversion direction
-    btnSwap.addEventListener('click', () => {
-      convertMode = convertMode === 'oldToNew' ? 'newToOld' : 'oldToNew';
-      if (convertMode === 'oldToNew') {
-        lblInputMode.innerHTML = '<span>📝 Eski alifbo</span><span class="pane-badge">Sh, Ch, O\', G\'</span>';
-        lblOutputMode.innerHTML = '<span>✨ Yangi alifbo</span><span class="pane-badge" style="color:var(--accent);">Ş, Ç, Ö, Ğ</span>';
-      } else {
-        lblInputMode.innerHTML = '<span>✨ Yangi alifbo</span><span class="pane-badge" style="color:var(--accent);">Ş, Ç, Ö, Ğ</span>';
-        lblOutputMode.innerHTML = '<span>📝 Eski alifbo</span><span class="pane-badge">Sh, Ch, O\', G\'</span>';
-      }
-      // Swap text
-      const currentOutput = txtOutput.value;
-      txtInput.value = currentOutput;
-      processConversion();
+      if (currentMode === 'cyrToNewLat') out = cyrillicToLatin(input, true);
+      else if (currentMode === 'cyrToOldLat') out = cyrillicToLatin(input, false);
+      else if (currentMode === 'latToCyr') out = latinToCyrillic(input);
+      else if (currentMode === 'oldToNewLat') out = oldToNewLatin(input);
+      else if (currentMode === 'newToOldLat') out = newToOldLatin(input);
+
+      txtOutput.value = out.result;
+      statChars.innerText = input.length;
+      statWords.innerText = input.trim() ? input.trim().split(/\s+/).length : 0;
+      statModified.innerText = out.count;
+    }
+
+    modeTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        modeTabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        currentMode = tab.dataset.mode;
+        updateModeBadges();
+        executeConversion();
+      });
     });
 
-    // Clear input
+    txtInput.addEventListener('input', executeConversion);
+
+    // Swap button
+    btnSwap.addEventListener('click', () => {
+      if (currentMode === 'cyrToNewLat') currentMode = 'latToCyr';
+      else if (currentMode === 'latToCyr') currentMode = 'cyrToNewLat';
+      else if (currentMode === 'cyrToOldLat') currentMode = 'latToCyr';
+      else if (currentMode === 'oldToNewLat') currentMode = 'newToOldLat';
+      else if (currentMode === 'newToOldLat') currentMode = 'oldToNewLat';
+
+      modeTabs.forEach(t => {
+        t.classList.toggle('active', t.dataset.mode === currentMode);
+      });
+
+      const temp = txtOutput.value;
+      txtInput.value = temp;
+      updateModeBadges();
+      executeConversion();
+    });
+
     btnClear.addEventListener('click', () => {
       txtInput.value = '';
       txtOutput.value = '';
@@ -1326,7 +1590,6 @@
       txtInput.focus();
     });
 
-    // Copy output
     btnCopy.addEventListener('click', () => {
       if (!txtOutput.value) return;
       navigator.clipboard.writeText(txtOutput.value).then(() => {
@@ -1339,15 +1602,16 @@
       });
     });
 
-    // Sample text button
     btnSampleText.addEventListener('click', () => {
-      txtInput.value = "O'zbekiston Respublikasi bo'ylab shiddatli o'zgarishlar va g'alabalar sari shoshilmoqdamiz. Choyxonalarda chiroyli suhbatlar qurilmoqda. SHAXSLAR va CHARXLAR harakatda!";
-      processConversion();
+      if (currentMode.startsWith('cyr')) {
+        txtInput.value = "Ўзбекистон Республикаси бўйлаб кенg кўламли янгиланишлар ва ғалабалар сари шошилмоқдамиз. Чойхоналар ва катта шаҳарларда янги бинолар қурилмоqda. Эълон: барча ёшлар ва оилалар қатнашсин!";
+      } else {
+        txtInput.value = "O'zbekiston Respublikasi bo'ylab keng ko'lamli yangilanishlar va g'alabalar sari shoshilmoqdamiz. Choyxonalar va katta shaharlarda yangi binolar qurilmoqda. E'lon: barcha yoshlar va oilalar qatnashsin!";
+      }
+      executeConversion();
     });
 
-    /* ========================================================
-       KEYBOARD SIMULATOR LOGIC
-       ======================================================== */
+    /* Keyboard Simulator */
     const keyMap = {
       '[': { normal: 'ö', shift: 'Ö' },
       ']': { normal: 'ğ', shift: 'Ğ' },
