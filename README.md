@@ -26,9 +26,14 @@ Ushbu loyiha O'zbekistonning yangi lotin alifbosi islohotiga muvofiq ishlab chiq
 
 ## 📝 Microsoft Office (Word) Qo'shimchasi
 
-* Microsoft Word ochilganda, **"Bosh sahifa" (Home)** lentasida maxsus **"Yangi alifboga o'girish"** tugmasi paydo bo'ladi.
-* 1 marta bosish bilan butun hujjatdagi barcha shriftlar, jadvallar, ranglar va qalin/kursiv formatlarni saqlagan holda yangi alifboga aylantiradi!
-* Standart va nostandart barcha apostroflarni (`O'`, `O‘`, `Oʻ`, `O’`, `G'`, `G‘`, `Gʻ`, `G’`) to'liq taniydi.
+* Microsoft Word ochilganda, **"Вид" (View)** menyusidan keyin alohida **"Yangi Alifbo"** lentasi paydo bo'ladi.
+* 1 marta bosish bilan butun hujjatni yoki belgilangan matn qismini formatlashni buzmagan holda o'giradi:
+  1. **Lotin ➔ Yangi Lotin:** `sh, ch, o', g'` larni `ş, ç, ö, ğ` ga o'tkazish.
+  2. **Yangi Lotin ➔ Eski Lotin:** `ş, ç, ö, ğ` larni `sh, ch, o', g'` ga qaytarish.
+  3. **Kirill ➔ Yangi Lotin:** Kirillcha matnni bir zumda yangi alifboga o'tkazish (`Ц/ц`, `Е/е`, `Ю/ю`, `Я/я` va tutuq belgisi qoidalari bilan).
+  4. **Kirill ➔ Eski Lotin:** Kirillcha matnni klassik lotin alifbosiga o'tkazish.
+  5. **Lotin ➔ Kirill:** Yangi yoki eski lotin matnini to'g'ri kirill alifbosiga aylantirish.
+* Barcha standart va nostandart tutuq belgilarini (`O'`, `O‘`, `Oʻ`, `O’`, `G'`, `G‘`, `Gʻ`, `G’`) to'liq taniydi.
 
 ---
 
