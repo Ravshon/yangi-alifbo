@@ -1037,6 +1037,7 @@
           <a href="#xarita">Klaviatura Surat</a>
           <a href="#simulator">Simulyator</a>
           <a href="#ornatish">O'rnatish</a>
+          <a href="#api">Dasturchilar (API)</a>
           <a href="https://github.com/Ravshon/yangi-alifbo" target="_blank">GitHub</a>
         </div>
         <button id="themeToggleBtn" class="theme-toggle-btn" title="Mavzuni almashtirish (Oq / Qorong'i)">
@@ -1441,6 +1442,58 @@
       </div>
     </section>
 
+    <!-- Developer & API Section -->
+    <section class="section-wrap" id="api">
+      <div class="container">
+        <div class="section-title-wrap">
+          <div class="section-tag">Dasturchilar Uchun</div>
+          <h2 class="section-title">API va Kutubxonalar (JS & Python)</h2>
+          <p class="section-sub">O'z veb-saytingiz, Telegram botingiz yoki ilovangizga yangi alifbo konvertorini oson integratsiya qiling</p>
+        </div>
+
+        <div class="converter-card" style="margin-bottom: 1.5rem;">
+          <div class="word-features-grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
+            <div class="feature-box">
+              <h4>⚡ JavaScript & Web (CDN)</h4>
+              <p style="margin-bottom: 0.75rem;">Brauzer yoki Node.js uchun nol bog'liqlikli (zero-dependency) modul:</p>
+              <pre style="background:var(--subtle-bg); padding:0.75rem; border-radius:6px; font-family:'JetBrains Mono', monospace; font-size:0.8rem; overflow-x:auto; border:1px solid var(--card-border); color:var(--text-main);"><code>&lt;script src="https://ravshon.github.io/yangi-alifbo/yangi-alifbo.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+  const res = YangiAlifbo.convert("Ўзбекистон", "cyrToNewLat");
+  console.log(res.result); // "Özbekiston"
+&lt;/script&gt;</code></pre>
+            </div>
+
+            <div class="feature-box">
+              <h4>🐍 Python (Telegram Botlar)</h4>
+              <p style="margin-bottom: 0.75rem;">Telegram botlar (aiogram, telebot) uchun toza Python moduli (<code>yangi_alifbo.py</code>):</p>
+              <pre style="background:var(--subtle-bg); padding:0.75rem; border-radius:6px; font-family:'JetBrains Mono', monospace; font-size:0.8rem; overflow-x:auto; border:1px solid var(--card-border); color:var(--text-main);"><code>from yangi_alifbo import cyrillic_to_latin
+
+# Kirilldan Yangi lotinga
+matn, count = cyrillic_to_latin("Ўзбекистон", is_new=True)
+print(matn) # "Özbekiston"</code></pre>
+            </div>
+
+            <div class="feature-box">
+              <h4>🌐 REST API Serveri</h4>
+              <p style="margin-bottom: 0.75rem;">O'z serveringizda <code>node api_server.js</code> orqali ishga tushiring:</p>
+              <pre style="background:var(--subtle-bg); padding:0.75rem; border-radius:6px; font-family:'JetBrains Mono', monospace; font-size:0.8rem; overflow-x:auto; border:1px solid var(--card-border); color:var(--text-main);"><code>GET /api/convert?text=Salom&mode=cyrToNewLat
+
+// JSON Javob:
+{
+  "success": true,
+  "result": "Salom",
+  "author": "https://github.com/Ravshon"
+}</code></pre>
+            </div>
+          </div>
+
+          <div style="margin-top: 1.5rem; padding: 1rem 1.25rem; background: rgba(2, 132, 199, 0.08); border: 1px solid rgba(2, 132, 199, 0.25); border-radius: var(--radius-sm); font-size: 0.9rem; color: var(--text-main);">
+            <strong>⚖️ Litsenziya talabi (Mandatory Attribution):</strong> Ushbu algoritmlar va kodlardan o'z loyihalaringizda foydalanganda, asl muallifning GitHub profiliga (<strong><a href="https://github.com/Ravshon" target="_blank" style="color:var(--accent);">https://github.com/Ravshon</a></strong>) havola ko'rsatish qat'iy majburiydir.
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- FAQ -->
     <section class="section-wrap" id="faq">
       <div class="container">
@@ -1469,7 +1522,11 @@
   <footer>
     <div class="container">
       <p>O'zbekistonning yangi lotin alifbosi tashabbusi • Ochiq manbali loyiha (Open Source)</p>
-      <p style="margin-top: 0.5rem;">Muallif: <a href="https://github.com/Ravshon" target="_blank">Ravshon</a> • <a href="https://github.com/Ravshon/yangi-alifbo" target="_blank">GitHub ombori</a></p>
+      <p style="margin-top: 0.5rem;">
+        Muallif: <a href="https://github.com/Ravshon" target="_blank"><strong>Ravshon</strong></a> • 
+        <a href="https://github.com/Ravshon/yangi-alifbo" target="_blank">GitHub ombori</a> • 
+        <a href="https://github.com/Ravshon/yangi-alifbo/blob/main/LICENSE" target="_blank">Litsenziya (MIT Attribution)</a>
+      </p>
     </div>
   </footer>
 

@@ -41,3 +41,72 @@ Ushbu loyiha O'zbekistonning yangi lotin alifbosi islohotiga muvofiq ishlab chiq
 
 * Shunchaki bittagina [YangiAlifbo_Setup.exe](https://github.com/Ravshon/yangi-alifbo/releases/download/v1.0.0/YangiAlifbo_Setup.exe) faylini yuklab oling va oching.
 * Dastur avtomatik ravishda ham **Klaviatura drayverini**, ham **Microsoft Word qo'shimchasini** 1 soniyada tizimga o'rnatadi.
+
+---
+
+## 👩‍💻 Dasturchilar uchun (API & Kutubxonalar)
+
+Boshqa dasturchilar o'zlarining veb-saytlari, Telegram botlari yoki mobil ilovalarida yangi alifbo konvertoridan bepul foydalanishlari uchun maxsus kutubxonalar va API tayyorlangan:
+
+### 1. JavaScript / Node.js (`yangi-alifbo.js`)
+Nol bog'liqlikli (zero-dependency) universal modul. Brauzerda ham, serverda ham birdek ishlaydi.
+
+**Brauzerda to'g'ridan-to'g'ri ulash (CDN):**
+```html
+<script src="https://ravshon.github.io/yangi-alifbo/yangi-alifbo.js"></script>
+<script>
+  // Kirilldan Yangi lotinga o'girish
+  const res = YangiAlifbo.convert("Ўзбекистон шаҳарлари", "cyrToNewLat");
+  console.log(res.result); // "Özbekiston şaharlari"
+</script>
+```
+
+**Node.js da foydalanish:**
+```javascript
+const YangiAlifbo = require('./yangi-alifbo.js');
+
+const res = YangiAlifbo.convert('Чўлпон ва Ғафур Ғулом', 'cyrToNewLat');
+console.log(res.result); // "Çölpon va Ğafur Ğulom"
+```
+
+### 2. Python (`yangi_alifbo.py`)
+Telegram botlar (aiogram, telebot, python-telegram-bot) va ma'lumotlar tahlili uchun toza Python moduli:
+```python
+from yangi_alifbo import cyrillic_to_latin, latin_to_cyrillic, convert
+
+# Kirilldan Yangi Lotinga
+matn, count = cyrillic_to_latin("Ўзбекистон Республикаси", is_new=True)
+print(matn)  # "Özbekiston Respublikasi"
+
+# Lotindan (eski yoki yangi) Kirillga
+kirill, count = latin_to_cyrillic("Özbekiston şoirlari çoyxonada")
+print(kirill)  # "Ўзбекистон шоирлари чойхонада"
+```
+
+### 3. REST API Serveri (`api_server.js`)
+Node.js da ishlovchi tayyor REST API:
+```bash
+node api_server.js
+```
+So'rov yuborish:
+```bash
+# GET so'rovi
+curl "http://localhost:3000/api/convert?text=Ўзбекистон&mode=cyrToNewLat"
+
+# POST so'rovi (JSON)
+curl -X POST http://localhost:3000/api/convert \
+     -H "Content-Type: application/json" \
+     -d '{"text": "Ўзбекистон", "mode": "cyrToNewLat"}'
+```
+
+---
+
+## 📄 Litsenziya va Mualliflik Huquqi (Mandatory Attribution)
+
+Ushbu loyiha **MIT License with Mandatory Attribution** litsenziyasi ostida ochiq manbalidir.
+
+> ⚠️ **QAT'IY TALAB:**
+> Ushbu loyihadan (klaviatura drayveri, Word makroslari, konvertor algoritmlari, API va kodlardan) istalgan maqsadda (tijoriy yoki notijoriy) foydalanilganda yoki boshqa dasturlarga integratsiya qilinganda, **asl muallifning GitHub profiliga havola ko'rsatilishi SHART**:
+> 
+> 👉 **Muallif:** [Ravshon](https://github.com/Ravshon) (`https://github.com/Ravshon`)  
+> 👉 **Loyiha ombori:** [yangi-alifbo](https://github.com/Ravshon/yangi-alifbo)
