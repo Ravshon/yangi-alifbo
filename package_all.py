@@ -14,19 +14,48 @@ DOTM_KLAV = os.path.join(KLAV_DIR, "YangiAlifbo.dotm")
 STARTUP_DIR = os.path.expandvars(r"%APPDATA%\Microsoft\Word\STARTUP")
 DOTM_STARTUP = os.path.join(STARTUP_DIR, "YangiAlifbo.dotm")
 
-# 1. Kill any open Word processes
+# 1. Word jarayonlarini xavfsiz to'xtatish
 subprocess.run(["taskkill", "/f", "/im", "winword.exe"], capture_output=True)
 
-print("--- Step 1: Building YangiAlifbo.dotm with updated VBA and Ribbon ---")
+print("--- 1-qadam: YangiAlifbo.dotm shablonini yaratish ---")
 word = win32com.client.Dispatch('Word.Application')
 word.Visible = False
 doc = word.Documents.Add()
 
-vba_code = '''
-Option Explicit
+vba_master = '''Option Explicit
+
+Private Sub RepText(rng As Range, ByVal findWhat As String, ByVal replaceWith As String, Optional ByVal matchCase As Boolean = True)
+    With rng.Find
+        .ClearFormatting
+        .Replacement.ClearFormatting
+        .Text = findWhat
+        .Replacement.Text = replaceWith
+        .Forward = True
+        .Wrap = wdFindContinue
+        .Format = False
+        .matchCase = matchCase
+        .MatchWholeWord = False
+        .MatchWildcards = False
+        .MatchSoundsLike = False
+        .MatchAllWordForms = False
+        .Execute Replace:=wdReplaceAll
+    End With
+End Sub
+
+Private Function GetWorkingRange() As Range
+    If ActiveDocument Is Nothing Then
+        Set GetWorkingRange = Nothing
+        Exit Function
+    End If
+    If Selection.Type = wdSelectionIP Or Selection.Range.Characters.Count <= 1 Then
+        Set GetWorkingRange = ActiveDocument.Content
+    Else
+        Set GetWorkingRange = Selection.Range
+    End If
+End Function
 
 ' ========================================================
-' 1. LOTIN -> YANGI LOTIN (Eski Lotindagi Sh, Ch, O', G' -> S, C, O, G)
+' 1. LOTIN -> YANGI LOTIN
 ' ========================================================
 Public Sub LotinToYangiLotin(Optional control As Object = Nothing)
     Dim rng As Range
@@ -35,7 +64,6 @@ Public Sub LotinToYangiLotin(Optional control As Object = Nothing)
     
     Application.ScreenUpdating = False
     
-    ' Sh / Ch
     Call RepText(rng, "SH", ChrW(350), True)
     Call RepText(rng, "Sh", ChrW(350), True)
     Call RepText(rng, "sh", ChrW(351), True)
@@ -43,25 +71,24 @@ Public Sub LotinToYangiLotin(Optional control As Object = Nothing)
     Call RepText(rng, "Ch", ChrW(199), True)
     Call RepText(rng, "ch", ChrW(231), True)
     
-    ' O' / G'
     Dim apos As Variant
     apos = Array("'", ChrW(8216), ChrW(8217), ChrW(699), ChrW(700), "`", ChrW(180))
     Dim i As Long
     For i = LBound(apos) To UBound(apos)
-        Call RepText(rng, "O" & apos(i), ChrW(214), True)
-        Call RepText(rng, "o" & apos(i), ChrW(246), True)
-        Call RepText(rng, "G" & apos(i), ChrW(286), True)
-        Call RepText(rng, "g" & apos(i), ChrW(287), True)
+        Call RepText(rng, "O" & CStr(apos(i)), ChrW(214), True)
+        Call RepText(rng, "o" & CStr(apos(i)), ChrW(246), True)
+        Call RepText(rng, "G" & CStr(apos(i)), ChrW(286), True)
+        Call RepText(rng, "g" & CStr(apos(i)), ChrW(287), True)
     Next i
     
     Application.ScreenUpdating = True
     Application.ScreenRefresh
     DoEvents
-    Application.StatusBar = "Matn yangi lotin alifbosiga (Ö, Ğ, Ş, Ç) muvaffaqiyatli o'tkazildi! (Bekor qilish: Ctrl+Z)"
+    Application.StatusBar = "Matn yangi lotin alifbosiga muvaffaqiyatli o'tkazildi! (Bekor qilish: Ctrl+Z)"
 End Sub
 
 ' ========================================================
-' 2. YANGI LOTIN -> ESKI LOTIN (S, C, O, G -> Sh, Ch, O', G')
+' 2. YANGI LOTIN -> ESKI LOTIN
 ' ========================================================
 Public Sub YangiLotinToEskiLotin(Optional control As Object = Nothing)
     Dim rng As Range
@@ -83,7 +110,7 @@ Public Sub YangiLotinToEskiLotin(Optional control As Object = Nothing)
     Application.ScreenUpdating = True
     Application.ScreenRefresh
     DoEvents
-    Application.StatusBar = "Matn eski lotin alifbosiga (Sh, Ch, O', G') muvaffaqiyatli o'tkazildi! (Bekor qilish: Ctrl+Z)"
+    Application.StatusBar = "Matn eski lotin alifbosiga muvaffaqiyatli o'tkazildi! (Bekor qilish: Ctrl+Z)"
 End Sub
 
 ' ========================================================
@@ -119,7 +146,7 @@ Public Sub KirillToEskiLotin(Optional control As Object = Nothing)
 End Sub
 
 ' ========================================================
-' 5. LOTIN -> KIRILL (Yangi va eski lotin variantlarini to'liq taniydi)
+' 5. LOTIN -> KIRILL
 ' ========================================================
 Public Sub LotinToKirill(Optional control As Object = Nothing)
     Dim rng As Range
@@ -134,22 +161,19 @@ Public Sub LotinToKirill(Optional control As Object = Nothing)
     Application.StatusBar = "Matn Lotindan Kirill alifbosiga muvaffaqiyatli o'tkazildi! (Bekor qilish: Ctrl+Z)"
 End Sub
 
-' --------------------------------------------------------
-' Yordamchi Funksiya: Kirill -> Lotin
-' --------------------------------------------------------
+' Yordamchi: Kirill -> Lotin
 Private Sub DoKirillToLotin(rng As Range, isNew As Boolean)
-    ' Sh / Ch / O' / G'
     If isNew Then
-        Call RepText(rng, ChrW(1064), ChrW(350), True) ' Ш -> Ş
-        Call RepText(rng, ChrW(1096), ChrW(351), True) ' ш -> ş
-        Call RepText(rng, ChrW(1065), ChrW(350), True) ' Щ -> Ş
-        Call RepText(rng, ChrW(1097), ChrW(351), True) ' щ -> ş
-        Call RepText(rng, ChrW(1063), ChrW(199), True) ' Ч -> Ç
-        Call RepText(rng, ChrW(1095), ChrW(231), True) ' ч -> ç
-        Call RepText(rng, ChrW(1038), ChrW(214), True) ' Ў -> Ö
-        Call RepText(rng, ChrW(1118), ChrW(246), True) ' ў -> ö
-        Call RepText(rng, ChrW(1170), ChrW(286), True) ' Ғ -> Ğ
-        Call RepText(rng, ChrW(1171), ChrW(287), True) ' ғ -> ğ
+        Call RepText(rng, ChrW(1064), ChrW(350), True)
+        Call RepText(rng, ChrW(1096), ChrW(351), True)
+        Call RepText(rng, ChrW(1065), ChrW(350), True)
+        Call RepText(rng, ChrW(1097), ChrW(351), True)
+        Call RepText(rng, ChrW(1063), ChrW(199), True)
+        Call RepText(rng, ChrW(1095), ChrW(231), True)
+        Call RepText(rng, ChrW(1038), ChrW(214), True)
+        Call RepText(rng, ChrW(1118), ChrW(246), True)
+        Call RepText(rng, ChrW(1170), ChrW(286), True)
+        Call RepText(rng, ChrW(1171), ChrW(287), True)
     Else
         Call RepText(rng, ChrW(1064), "Sh", True)
         Call RepText(rng, ChrW(1096), "sh", True)
@@ -163,29 +187,31 @@ Private Sub DoKirillToLotin(rng As Range, isNew As Boolean)
         Call RepText(rng, ChrW(1171), "g'", True)
     End If
     
-    ' Digraflar: Ё, Ю, Я, Ц
-    Call RepText(rng, ChrW(1025), "Yo", True) ' Ё
-    Call RepText(rng, ChrW(1105), "yo", True) ' ё
-    Call RepText(rng, ChrW(1070), "Yu", True) ' Ю
-    Call RepText(rng, ChrW(1102), "yu", True) ' ю
-    Call RepText(rng, ChrW(1071), "Ya", True) ' Я
-    Call RepText(rng, ChrW(1103), "ya", True) ' я
-    Call RepText(rng, ChrW(1062), "Ts", True) ' Ц
-    Call RepText(rng, ChrW(1094), "ts", True) ' ц
+    Call RepText(rng, ChrW(1025), "Yo", True)
+    Call RepText(rng, ChrW(1105), "yo", True)
+    Call RepText(rng, ChrW(1070), "Yu", True)
+    Call RepText(rng, ChrW(1102), "yu", True)
+    Call RepText(rng, ChrW(1071), "Ya", True)
+    Call RepText(rng, ChrW(1103), "ya", True)
+    Call RepText(rng, ChrW(1062), "Ts", True)
+    Call RepText(rng, ChrW(1094), "ts", True)
     
-    ' Unlilar yoki so'z boshidan keyingi Е / е -> Ye / ye
     Dim vChars As Variant
-    vChars = Array("А", "а", "О", "о", "У", "у", "И", "и", "Э", "э", "Е", "е", "Ё", "ё", "Ю", "ю", "Я", "я", ChrW(1038), ChrW(1118), "ъ", "Ъ", " ", vbCr, vbLf, vbTab, Chr(34), "'", "(", "-")
+    vChars = Array(ChrW(1040), ChrW(1072), ChrW(1054), ChrW(1086), ChrW(1059), ChrW(1091), ChrW(1048), ChrW(1080), ChrW(1069), ChrW(1101), ChrW(1045), ChrW(1077), ChrW(1025), ChrW(1105), ChrW(1070), ChrW(1102), ChrW(1071), ChrW(1103), ChrW(1038), ChrW(1118), ChrW(1098), ChrW(1066), " ", Chr(34), "'", "(", "-", vbTab)
     Dim k As Long
     For k = LBound(vChars) To UBound(vChars)
-        Call RepText(rng, vChars(k) & ChrW(1045), vChars(k) & "Ye", True)
-        Call RepText(rng, vChars(k) & ChrW(1077), vChars(k) & "ye", True)
+        Call RepText(rng, CStr(vChars(k)) & ChrW(1045), CStr(vChars(k)) & "Ye", True)
+        Call RepText(rng, CStr(vChars(k)) & ChrW(1077), CStr(vChars(k)) & "ye", True)
     Next k
-    ' Qolgan Е / е -> E / e
+    
+    If Len(rng.Text) > 0 Then
+        If Left(rng.Text, 1) = ChrW(1045) Then rng.Characters(1).Text = "Ye"
+        If Left(rng.Text, 1) = ChrW(1077) Then rng.Characters(1).Text = "ye"
+    End If
+    
     Call RepText(rng, ChrW(1045), "E", True)
     Call RepText(rng, ChrW(1077), "e", True)
     
-    ' Bittalik harflar
     Call RepText(rng, ChrW(1040), "A", True)
     Call RepText(rng, ChrW(1072), "a", True)
     Call RepText(rng, ChrW(1041), "B", True)
@@ -230,42 +256,37 @@ Private Sub DoKirillToLotin(rng As Range, isNew As Boolean)
     Call RepText(rng, ChrW(1093), "x", True)
     Call RepText(rng, ChrW(1069), "E", True)
     Call RepText(rng, ChrW(1101), "e", True)
-    Call RepText(rng, ChrW(1178), "Q", True) ' Қ
-    Call RepText(rng, ChrW(1179), "q", True) ' қ
-    Call RepText(rng, ChrW(1120), "H", True) ' Ҳ
-    Call RepText(rng, ChrW(1121), "h", True) ' ҳ
-    Call RepText(rng, ChrW(1066), "'", True) ' Ъ
-    Call RepText(rng, ChrW(1098), "'", True) ' ъ
-    Call RepText(rng, ChrW(1068), "", True)  ' Ь
-    Call RepText(rng, ChrW(1100), "", True)  ' ь
+    Call RepText(rng, ChrW(1178), "Q", True)
+    Call RepText(rng, ChrW(1179), "q", True)
+    Call RepText(rng, ChrW(1120), "H", True)
+    Call RepText(rng, ChrW(1121), "h", True)
+    Call RepText(rng, ChrW(1066), "'", True)
+    Call RepText(rng, ChrW(1098), "'", True)
+    Call RepText(rng, ChrW(1068), "", True)
+    Call RepText(rng, ChrW(1100), "", True)
 End Sub
 
-' --------------------------------------------------------
-' Yordamchi Funksiya: Lotin -> Kirill
-' --------------------------------------------------------
+' Yordamchi: Lotin -> Kirill
 Private Sub DoLotinToKirill(rng As Range)
-    ' 1. O' va G' harflarining barcha variantlari (Yangi va eski)
     Dim apos As Variant
     apos = Array("'", ChrW(8216), ChrW(8217), ChrW(699), ChrW(700), "`", ChrW(180))
     Dim i As Long
     For i = LBound(apos) To UBound(apos)
-        Call RepText(rng, "O" & apos(i), ChrW(1038), True) ' Ў
-        Call RepText(rng, "o" & apos(i), ChrW(1118), True) ' ў
-        Call RepText(rng, "G" & apos(i), ChrW(1170), True) ' Ғ
-        Call RepText(rng, "g" & apos(i), ChrW(1171), True) ' ғ
+        Call RepText(rng, "O" & CStr(apos(i)), ChrW(1038), True)
+        Call RepText(rng, "o" & CStr(apos(i)), ChrW(1118), True)
+        Call RepText(rng, "G" & CStr(apos(i)), ChrW(1170), True)
+        Call RepText(rng, "g" & CStr(apos(i)), ChrW(1171), True)
     Next i
     
-    ' Yangi alifbo harflari
-    Call RepText(rng, ChrW(214), ChrW(1038), True) ' Ö -> Ў
-    Call RepText(rng, ChrW(246), ChrW(1118), True) ' ö -> ў
-    Call RepText(rng, ChrW(286), ChrW(1170), True) ' Ğ -> Ғ
-    Call RepText(rng, ChrW(287), ChrW(1171), True) ' ğ -> ғ
-    Call RepText(rng, ChrW(350), ChrW(1064), True) ' Ş -> Ш
-    Call RepText(rng, ChrW(351), ChrW(1096), True) ' ş -> ш
-    Call RepText(rng, ChrW(199), ChrW(1063), True) ' Ç -> Ч
-    Call RepText(rng, ChrW(231), ChrW(1095), True) ' ç -> ч
+    Call RepText(rng, ChrW(214), ChrW(1038), True)
+    Call RepText(rng, ChrW(246), ChrW(1118), True)
+    Call RepText(rng, ChrW(286), ChrW(1170), True)
+    Call RepText(rng, ChrW(287), ChrW(1171), True)
+    Call RepText(rng, ChrW(350), ChrW(1064), True)
+    Call RepText(rng, ChrW(351), ChrW(1096), True)
+    Call RepText(rng, ChrW(199), ChrW(1063), True)
+    Call RepText(rng, ChrW(231), ChrW(1095), True)
     
-    ' Eski lotin birikmalari
     Call RepText(rng, "SH", ChrW(1064), True)
     Call RepText(rng, "Sh", ChrW(1064), True)
     Call RepText(rng, "sh", ChrW(1096), True)
@@ -288,16 +309,19 @@ Private Sub DoLotinToKirill(rng As Range)
     Call RepText(rng, "Ts", ChrW(1062), True)
     Call RepText(rng, "ts", ChrW(1094), True)
     
-    ' So'z boshidagi E -> Э
     Dim bChars As Variant
-    bChars = Array(" ", vbCr, vbLf, vbTab, Chr(34), "(", "-", "«", "[")
+    bChars = Array(" ", Chr(34), "(", "-", ChrW(171), "[", vbTab)
     Dim b As Long
     For b = LBound(bChars) To UBound(bChars)
-        Call RepText(rng, bChars(b) & "E", bChars(b) & ChrW(1069), True)
-        Call RepText(rng, bChars(b) & "e", bChars(b) & ChrW(1101), True)
+        Call RepText(rng, CStr(bChars(b)) & "E", CStr(bChars(b)) & ChrW(1069), True)
+        Call RepText(rng, CStr(bChars(b)) & "e", CStr(bChars(b)) & ChrW(1101), True)
     Next b
     
-    ' Qolgan harflar
+    If Len(rng.Text) > 0 Then
+        If Left(rng.Text, 1) = "E" Then rng.Characters(1).Text = ChrW(1069)
+        If Left(rng.Text, 1) = "e" Then rng.Characters(1).Text = ChrW(1101)
+    End If
+    
     Call RepText(rng, "A", ChrW(1040), True)
     Call RepText(rng, "a", ChrW(1072), True)
     Call RepText(rng, "B", ChrW(1041), True)
@@ -347,46 +371,15 @@ Private Sub DoLotinToKirill(rng As Range)
     Call RepText(rng, "Z", ChrW(1047), True)
     Call RepText(rng, "z", ChrW(1079), True)
     
-    ' Tutuq belgisi -> ъ
     For i = LBound(apos) To UBound(apos)
-        Call RepText(rng, apos(i), ChrW(1098), True)
+        Call RepText(rng, CStr(apos(i)), ChrW(1098), True)
     Next i
-End Sub
-
-Private Function GetWorkingRange() As Range
-    If ActiveDocument Is Nothing Then
-        Set GetWorkingRange = Nothing
-        Exit Function
-    End If
-    If Selection.Type = wdSelectionIP Or Selection.Range.Characters.Count <= 1 Then
-        Set GetWorkingRange = ActiveDocument.Content
-    Else
-        Set GetWorkingRange = Selection.Range
-    End If
-End Function
-
-Private Sub RepText(rng As Range, findWhat As String, replaceWith As String, matchCase As Boolean)
-    With rng.Find
-        .ClearFormatting
-        .Replacement.ClearFormatting
-        .Text = findWhat
-        .Replacement.Text = replaceWith
-        .Forward = True
-        .Wrap = wdFindContinue
-        .Format = False
-        .matchCase = matchCase
-        .MatchWholeWord = False
-        .MatchWildcards = False
-        .MatchSoundsLike = False
-        .MatchAllWordForms = False
-        .Execute Replace:=wdReplaceAll
-    End With
 End Sub
 '''
 
 vb_comp = doc.VBProject.VBComponents.Add(1)
 vb_comp.Name = "YangiAlifbo"
-vb_comp.CodeModule.AddFromString(vba_code)
+vb_comp.CodeModule.AddFromString(vba_master)
 
 if os.path.exists(DOTM_PATH):
     os.remove(DOTM_PATH)
@@ -394,7 +387,7 @@ if os.path.exists(DOTM_PATH):
 doc.SaveAs2(DOTM_PATH, FileFormat=15)
 doc.Close(False)
 word.Quit()
-print("Base YangiAlifbo.dotm template saved.")
+print("Asosiy YangiAlifbo.dotm shabloni saqlandi.")
 
 custom_ui_xml = '''<customUI xmlns="http://schemas.microsoft.com/office/2009/07/customui">
   <ribbon>
@@ -476,30 +469,30 @@ try:
                 abs_path = os.path.join(root, file)
                 rel_path = os.path.relpath(abs_path, temp_dir)
                 zip_write.write(abs_path, rel_path)
-    print("YangiAlifbo.dotm packaging complete.")
+    print("YangiAlifbo.dotm to'liq qayta yaratildi.")
 finally:
     shutil.rmtree(temp_dir)
 
-# 2. Copy to YangiAlifbo_Klaviatura and Word STARTUP
+# 2. YangiAlifbo_Klaviatura va Word STARTUP papkalariga nusxalash
 shutil.copy2(DOTM_PATH, DOTM_KLAV)
-print(f"Copied to {DOTM_KLAV}")
+print(f"Nusxalandi: {DOTM_KLAV}")
 
 try:
     shutil.copy2(DOTM_PATH, DOTM_STARTUP)
-    print(f"Copied to {DOTM_STARTUP}")
+    print(f"Nusxalandi: {DOTM_STARTUP}")
 except Exception as e:
-    print(f"Could not copy to STARTUP: {e}")
+    print(f"STARTUP ga nusxalashda xatolik: {e}")
 
-# 3. Create Word_YangiAlifbo_Addin.zip
+# 3. Word_YangiAlifbo_Addin.zip yaratish
 addin_zip = os.path.join(BASE_DIR, "Word_YangiAlifbo_Addin.zip")
 if os.path.exists(addin_zip): os.remove(addin_zip)
 with zipfile.ZipFile(addin_zip, 'w', zipfile.ZIP_DEFLATED) as z:
     z.write(DOTM_PATH, "YangiAlifbo.dotm")
     z.write(os.path.join(BASE_DIR, "Word_Qoshimchasini_Ornatish.bat"), "Word_Qoshimchasini_Ornatish.bat")
     z.write(os.path.join(BASE_DIR, "Word_Qoshimchasini_Ochirish.bat"), "Word_Qoshimchasini_Ochirish.bat")
-print("Word_YangiAlifbo_Addin.zip built.")
+print("Word_YangiAlifbo_Addin.zip yaratildi.")
 
-# 4. Create Yangi_Alifbo_Klaviatura.zip
+# 4. Yangi_Alifbo_Klaviatura.zip yaratish
 klav_zip = os.path.join(BASE_DIR, "Yangi_Alifbo_Klaviatura.zip")
 if os.path.exists(klav_zip): os.remove(klav_zip)
 with zipfile.ZipFile(klav_zip, 'w', zipfile.ZIP_DEFLATED) as z:
@@ -508,9 +501,9 @@ with zipfile.ZipFile(klav_zip, 'w', zipfile.ZIP_DEFLATED) as z:
             abs_p = os.path.join(root, file)
             rel_p = os.path.relpath(abs_p, BASE_DIR)
             z.write(abs_p, rel_p)
-print("Yangi_Alifbo_Klaviatura.zip built.")
+print("Yangi_Alifbo_Klaviatura.zip yaratildi.")
 
-# 5. Compile YangiAlifbo_Setup.exe
+# 5. YangiAlifbo_Setup.exe dasturini kompyutatsiyalash
 csc_path = r"C:\Windows\Microsoft.NET\Framework64\v4.0.30319\csc.exe"
 cmd = [
     csc_path,
@@ -522,10 +515,10 @@ cmd = [
 ]
 res = subprocess.run(cmd, capture_output=True, text=True)
 if res.returncode == 0:
-    print("YangiAlifbo_Setup.exe compiled successfully!")
+    print("YangiAlifbo_Setup.exe muvaffaqiyatli kompilyatsiya qilindi!")
 else:
-    print("CSC compilation failed:")
+    print("CSC kompilyatsiya xatosi:")
     print(res.stderr)
     sys.exit(1)
 
-print("ALL BUILDS COMPLETED SUCCESSFULLY!")
+print("BARCHA ISHLAR MUVAFFAQIYATLI YAKUNLANDI!")
