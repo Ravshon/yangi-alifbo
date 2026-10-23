@@ -10,7 +10,8 @@ namespace YangiAlifboInstaller {
     public class InstallerForm : Form {
         private Label lblTitle;
         private Label lblSubtitle;
-        private Label lblInfo;
+        private CheckBox chkKeyboard;
+        private CheckBox chkWordAddin;
         private Button btnInstall;
         private Button btnUninstall;
         private Label lblStatus;
@@ -21,8 +22,8 @@ namespace YangiAlifboInstaller {
         }
 
         private void InitializeComponent() {
-            this.Text = "O'zbekcha Yangi Alifbo Klaviaturasi - O'rnatuvchi";
-            this.Size = new Size(540, 420);
+            this.Text = "O'zbekcha Yangi Alifbo - O'rnatuvchi Dastur";
+            this.Size = new Size(560, 480);
             this.StartPosition = FormStartPosition.CenterScreen;
             this.FormBorderStyle = FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
@@ -31,62 +32,72 @@ namespace YangiAlifboInstaller {
 
             // Title
             lblTitle = new Label();
-            lblTitle.Text = "O'zbekcha Yangi Alifbo Klaviaturasi";
+            lblTitle.Text = "O'zbekcha Yangi Alifbo To'plami";
             lblTitle.Font = new Font("Segoe UI", 16f, FontStyle.Bold);
             lblTitle.ForeColor = Color.FromArgb(15, 23, 42);
-            lblTitle.Location = new Point(25, 25);
-            lblTitle.Size = new Size(480, 35);
+            lblTitle.Location = new Point(25, 22);
+            lblTitle.Size = new Size(500, 35);
 
             // Subtitle
             lblSubtitle = new Label();
-            lblSubtitle.Text = "Windows tizimining til qatoriga yangi alifboni (Ö, Ğ, Ş, Ç) qo'shish";
-            lblSubtitle.Font = new Font("Segoe UI", 10f, FontStyle.Regular);
+            lblSubtitle.Text = "Windows klaviaturasi va Microsoft Word uchun 1-klikli to'liq yechim";
+            lblSubtitle.Font = new Font("Segoe UI", 9.8f, FontStyle.Regular);
             lblSubtitle.ForeColor = Color.FromArgb(71, 85, 105);
-            lblSubtitle.Location = new Point(27, 62);
-            lblSubtitle.Size = new Size(480, 25);
+            lblSubtitle.Location = new Point(27, 58);
+            lblSubtitle.Size = new Size(500, 25);
 
-            // Key info card
-            Panel card = new Panel();
-            card.Location = new Point(25, 100);
-            card.Size = new Size(475, 110);
-            card.BackColor = Color.FromArgb(241, 245, 249);
-            card.BorderStyle = BorderStyle.FixedSingle;
+            // Options Group Box
+            GroupBox grp = new GroupBox();
+            grp.Text = " O'rnatiladigan komponentlarni tanlang: ";
+            grp.Location = new Point(25, 95);
+            grp.Size = new Size(495, 180);
+            grp.Font = new Font("Segoe UI", 9.5f, FontStyle.Bold);
+            grp.ForeColor = Color.FromArgb(30, 41, 59);
 
-            lblInfo = new Label();
-            lblInfo.Text = "✨ Yangi harflar qulay tugmalarga biriktirilgan:\n" +
-                           "  • [ tugmasida: ö va Ö    |  ; tugmasida: ş va Ş\n" +
-                           "  • ] tugmasida: ğ va Ğ    |  ' tugmasida: ç va Ç\n" +
-                           "  • \\ tugmasida: ; va :    |  ` tugmasida: ' va \"";
-            lblInfo.Font = new Font("Segoe UI", 9.5f, FontStyle.Regular);
-            lblInfo.ForeColor = Color.FromArgb(30, 41, 59);
-            lblInfo.Location = new Point(12, 10);
-            lblInfo.Size = new Size(450, 88);
-            card.Controls.Add(lblInfo);
+            chkKeyboard = new CheckBox();
+            chkKeyboard.Text = "1. Windows Klaviatura Drayveri (Ö, Ğ, Ş, Ç)\n   Standart QWERTY klaviaturada bitta bosishda yangi harflarni yozish imkoniyati.";
+            chkKeyboard.Font = new Font("Segoe UI", 9.2f, FontStyle.Regular);
+            chkKeyboard.ForeColor = Color.FromArgb(15, 23, 42);
+            chkKeyboard.Location = new Point(20, 28);
+            chkKeyboard.Size = new Size(460, 50);
+            chkKeyboard.Checked = true;
+
+            chkWordAddin = new CheckBox();
+            chkWordAddin.Text = "2. Microsoft Word Qo'shimchasi (Add-in)\n   Word lentasida bitta tugma: Eski matnni (SH, CH, O', G') 1 bosishda yangi alifboga o'giradi.";
+            chkWordAddin.Font = new Font("Segoe UI", 9.2f, FontStyle.Regular);
+            chkWordAddin.ForeColor = Color.FromArgb(15, 23, 42);
+            chkWordAddin.Location = new Point(20, 95);
+            chkWordAddin.Size = new Size(460, 55);
+            chkWordAddin.Checked = true;
+
+            grp.Controls.Add(chkKeyboard);
+            grp.Controls.Add(chkWordAddin);
 
             // Progress bar
             progressBar = new ProgressBar();
-            progressBar.Location = new Point(25, 225);
-            progressBar.Size = new Size(475, 18);
+            progressBar.Location = new Point(25, 290);
+            progressBar.Size = new Size(495, 16);
             progressBar.Visible = false;
             progressBar.Style = ProgressBarStyle.Marquee;
 
             // Status label
             lblStatus = new Label();
-            lblStatus.Text = "Klaviaturani o'rnatish uchun quyidagi tugmani bosing:";
-            lblStatus.Location = new Point(25, 255);
-            lblStatus.Size = new Size(475, 25);
+            lblStatus.Text = "O'rnatish uchun quyidagi tugmani bosing:";
+            lblStatus.Location = new Point(25, 316);
+            lblStatus.Size = new Size(495, 25);
+            lblStatus.Font = new Font("Segoe UI", 9.5f, FontStyle.Regular);
             lblStatus.ForeColor = Color.FromArgb(100, 116, 139);
 
             // Install Button
             btnInstall = new Button();
-            btnInstall.Text = "📥  Klaviaturani O'rnatish (1-klik)";
-            btnInstall.Font = new Font("Segoe UI", 11f, FontStyle.Bold);
+            btnInstall.Text = "🚀  O'rnatish (1-klik)";
+            btnInstall.Font = new Font("Segoe UI", 11.5f, FontStyle.Bold);
             btnInstall.BackColor = Color.FromArgb(16, 185, 129);
             btnInstall.ForeColor = Color.White;
             btnInstall.FlatStyle = FlatStyle.Flat;
             btnInstall.FlatAppearance.BorderSize = 0;
-            btnInstall.Location = new Point(25, 285);
-            btnInstall.Size = new Size(320, 50);
+            btnInstall.Location = new Point(25, 348);
+            btnInstall.Size = new Size(340, 52);
             btnInstall.Cursor = Cursors.Hand;
             btnInstall.Click += BtnInstall_Click;
 
@@ -98,14 +109,14 @@ namespace YangiAlifboInstaller {
             btnUninstall.ForeColor = Color.FromArgb(71, 85, 105);
             btnUninstall.FlatStyle = FlatStyle.Flat;
             btnUninstall.FlatAppearance.BorderSize = 0;
-            btnUninstall.Location = new Point(360, 285);
-            btnUninstall.Size = new Size(140, 50);
+            btnUninstall.Location = new Point(380, 348);
+            btnUninstall.Size = new Size(140, 52);
             btnUninstall.Cursor = Cursors.Hand;
             btnUninstall.Click += BtnUninstall_Click;
 
             this.Controls.Add(lblTitle);
             this.Controls.Add(lblSubtitle);
-            this.Controls.Add(card);
+            this.Controls.Add(grp);
             this.Controls.Add(progressBar);
             this.Controls.Add(lblStatus);
             this.Controls.Add(btnInstall);
@@ -113,6 +124,11 @@ namespace YangiAlifboInstaller {
         }
 
         private void BtnInstall_Click(object sender, EventArgs e) {
+            if (!chkKeyboard.Checked && !chkWordAddin.Checked) {
+                MessageBox.Show("Iltimos, kamida bitta komponentni tanlang.", "Ogohlantirish", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             btnInstall.Enabled = false;
             btnUninstall.Enabled = false;
             progressBar.Visible = true;
@@ -121,16 +137,18 @@ namespace YangiAlifboInstaller {
             Application.DoEvents();
 
             try {
-                DoInstall();
+                DoInstall(chkKeyboard.Checked, chkWordAddin.Checked);
                 progressBar.Visible = false;
                 lblStatus.Text = "✅ Muvaffaqiyatli o'rnatildi!";
-                MessageBox.Show(
-                    "O'zbekcha yangi alifbo klaviaturasi tizimga muvaffaqiyatli o'rnatildi!\n\n" +
-                    "Foydalanish uchun: Win + Bo'sh joy (Space) tugmalarini bosing va 'Uzbek - new' klaviaturasini tanlang.",
-                    "O'rnatish yakunlandi",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information
-                );
+                
+                string msg = "Tanlangan komponentlar muvaffaqiyatli o'rnatildi!\n\n";
+                if (chkKeyboard.Checked) {
+                    msg += "• Klaviatura: Win + Bo'sh joy (Space) tugmasi orqali 'Uzbek - new' ni tanlang.\n";
+                }
+                if (chkWordAddin.Checked) {
+                    msg += "• Microsoft Word: Dasturni ochsangiz, 'Bosh sahifa' (Home) lentasida 'Yangi Alifbo' tugmasi paydo bo'ldi.\n";
+                }
+                MessageBox.Show(msg, "O'rnatish yakunlandi", MessageBoxButtons.OK, MessageBoxIcon.Information);
             } catch (Exception ex) {
                 progressBar.Visible = false;
                 lblStatus.Text = "Xatolik yuz berdi.";
@@ -144,7 +162,7 @@ namespace YangiAlifboInstaller {
 
         private void BtnUninstall_Click(object sender, EventArgs e) {
             DialogResult res = MessageBox.Show(
-                "O'zbekcha yangi alifbo klaviaturasini tizimdan o'chirmoqchimisiz?",
+                "Yangi alifbo komponentlarini tizimdan o'chirmoqchimisiz?",
                 "Tasdiqlash",
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question
@@ -158,10 +176,10 @@ namespace YangiAlifboInstaller {
             Application.DoEvents();
 
             try {
-                DoUninstall();
+                DoUninstall(chkKeyboard.Checked, chkWordAddin.Checked);
                 progressBar.Visible = false;
-                lblStatus.Text = "Klaviaturani o'chirish yakunlandi.";
-                MessageBox.Show("Klaviaturani o'chirish yakunlandi.", "Ma'lumot", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                lblStatus.Text = "O'chirish yakunlandi.";
+                MessageBox.Show("Tanlangan komponentlar tizimdan o'chirildi.", "Ma'lumot", MessageBoxButtons.OK, MessageBoxIcon.Information);
             } catch (Exception ex) {
                 progressBar.Visible = false;
                 lblStatus.Text = "O'chirishda xatolik yuz berdi.";
@@ -173,65 +191,92 @@ namespace YangiAlifboInstaller {
             }
         }
 
-        public static void DoInstall() {
+        public static void DoInstall(bool installKeyboard, bool installWord) {
             string tempDir = Path.Combine(Path.GetTempPath(), "YangiAlifbo_Setup_" + Guid.NewGuid().ToString("N"));
             Directory.CreateDirectory(tempDir);
             try {
                 ExtractResourceZip(tempDir);
-                bool is64 = Environment.Is64BitOperatingSystem;
-                string msiName = is64 ? "uz-new_amd64.msi" : "uz-new_i386.msi";
-                string msiPath = Path.Combine(tempDir, msiName);
 
-                if (!File.Exists(msiPath)) {
-                    // Try looking inside subfolder
-                    string sub = Path.Combine(tempDir, "YangiAlifbo_Klaviatura", msiName);
-                    if (File.Exists(sub)) msiPath = sub;
+                // 1. Install Keyboard
+                if (installKeyboard) {
+                    bool is64 = Environment.Is64BitOperatingSystem;
+                    string msiName = is64 ? "uz-new_amd64.msi" : "uz-new_i386.msi";
+                    string msiPath = Path.Combine(tempDir, msiName);
+
+                    if (!File.Exists(msiPath)) {
+                        string sub = Path.Combine(tempDir, "YangiAlifbo_Klaviatura", msiName);
+                        if (File.Exists(sub)) msiPath = sub;
+                    }
+
+                    ProcessStartInfo psi = new ProcessStartInfo();
+                    psi.FileName = "msiexec.exe";
+                    psi.Arguments = "/i \"" + msiPath + "\" /qb-";
+                    psi.UseShellExecute = true;
+                    psi.Verb = "runas";
+
+                    Process p = Process.Start(psi);
+                    p.WaitForExit();
+                    if (p.ExitCode != 0 && p.ExitCode != 3010) {
+                        throw new Exception("Klaviatura MSI o'rnatish kodi: " + p.ExitCode);
+                    }
                 }
 
-                ProcessStartInfo psi = new ProcessStartInfo();
-                psi.FileName = "msiexec.exe";
-                psi.Arguments = "/i \"" + msiPath + "\" /qb-";
-                psi.UseShellExecute = true;
-                psi.Verb = "runas";
+                // 2. Install Word Addin
+                if (installWord) {
+                    string dotmName = "YangiAlifbo.dotm";
+                    string dotmSrc = Path.Combine(tempDir, dotmName);
+                    if (!File.Exists(dotmSrc)) {
+                        dotmSrc = Path.Combine(tempDir, "YangiAlifbo_Klaviatura", dotmName);
+                    }
 
-                Process p = Process.Start(psi);
-                p.WaitForExit();
-                if (p.ExitCode != 0 && p.ExitCode != 3010) {
-                    throw new Exception("MSI o'rnatish kodi: " + p.ExitCode);
+                    if (File.Exists(dotmSrc)) {
+                        string appData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+                        string wordStartup = Path.Combine(appData, "Microsoft", "Word", "STARTUP");
+                        Directory.CreateDirectory(wordStartup);
+                        string dotmDest = Path.Combine(wordStartup, dotmName);
+                        File.Copy(dotmSrc, dotmDest, true);
+                    }
                 }
             } finally {
-                try {
-                    Directory.Delete(tempDir, true);
-                } catch {}
+                try { Directory.Delete(tempDir, true); } catch {}
             }
         }
 
-        public static void DoUninstall() {
+        public static void DoUninstall(bool uninstallKeyboard, bool uninstallWord) {
             string tempDir = Path.Combine(Path.GetTempPath(), "YangiAlifbo_Setup_" + Guid.NewGuid().ToString("N"));
             Directory.CreateDirectory(tempDir);
             try {
                 ExtractResourceZip(tempDir);
-                bool is64 = Environment.Is64BitOperatingSystem;
-                string msiName = is64 ? "uz-new_amd64.msi" : "uz-new_i386.msi";
-                string msiPath = Path.Combine(tempDir, msiName);
 
-                if (!File.Exists(msiPath)) {
-                    string sub = Path.Combine(tempDir, "YangiAlifbo_Klaviatura", msiName);
-                    if (File.Exists(sub)) msiPath = sub;
+                if (uninstallKeyboard) {
+                    bool is64 = Environment.Is64BitOperatingSystem;
+                    string msiName = is64 ? "uz-new_amd64.msi" : "uz-new_i386.msi";
+                    string msiPath = Path.Combine(tempDir, msiName);
+
+                    if (!File.Exists(msiPath)) {
+                        string sub = Path.Combine(tempDir, "YangiAlifbo_Klaviatura", msiName);
+                        if (File.Exists(sub)) msiPath = sub;
+                    }
+
+                    ProcessStartInfo psi = new ProcessStartInfo();
+                    psi.FileName = "msiexec.exe";
+                    psi.Arguments = "/x \"" + msiPath + "\" /qb-";
+                    psi.UseShellExecute = true;
+                    psi.Verb = "runas";
+
+                    Process p = Process.Start(psi);
+                    p.WaitForExit();
                 }
 
-                ProcessStartInfo psi = new ProcessStartInfo();
-                psi.FileName = "msiexec.exe";
-                psi.Arguments = "/x \"" + msiPath + "\" /qb-";
-                psi.UseShellExecute = true;
-                psi.Verb = "runas";
-
-                Process p = Process.Start(psi);
-                p.WaitForExit();
+                if (uninstallWord) {
+                    string appData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+                    string dotmDest = Path.Combine(appData, "Microsoft", "Word", "STARTUP", "YangiAlifbo.dotm");
+                    if (File.Exists(dotmDest)) {
+                        File.Delete(dotmDest);
+                    }
+                }
             } finally {
-                try {
-                    Directory.Delete(tempDir, true);
-                } catch {}
+                try { Directory.Delete(tempDir, true); } catch {}
             }
         }
 
@@ -253,10 +298,10 @@ namespace YangiAlifboInstaller {
             if (args.Length > 0) {
                 string arg = args[0].ToLowerInvariant();
                 if (arg == "/install" || arg == "/silent" || arg == "-i") {
-                    DoInstall();
+                    DoInstall(true, true);
                     return;
                 } else if (arg == "/uninstall" || arg == "-u") {
-                    DoUninstall();
+                    DoUninstall(true, true);
                     return;
                 }
             }

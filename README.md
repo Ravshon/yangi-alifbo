@@ -1,10 +1,15 @@
-# O'zbekcha Yangi Alifbo Klaviaturasi (Windows)
+# O'zbekcha Yangi Alifbo To'plami (Windows, Web & Word)
 
-Ushbu klaviatura tartibi (keyboard layout) O'zbekistonda yangi qabul qilingan lotin alifbosi islohotiga muvofiq yaratilgan. Unda **Ö**, **Ğ**, **Ş**, **Ç** harflari alohida tugmalarga biriktirilgan bo'lib, klaviatura rasmida ko'rsatilgan tartibga 100% mos keladi.
+Ushbu loyiha O'zbekistonning yangi lotin alifbosi islohotiga muvofiq ishlab chiqilgan bo'lib, o'z ichiga quyidagilarni oladi:
+1. **Windows Klaviatura Drayveri:** Standart klaviaturada **Ö**, **Ğ**, **Ş**, **Ç** harflarini alohida tugmalarda to'g'ridan-to'g'ri yozish.
+2. **Onlayn Matn Konvertori:** Veb-saytda eski alifbodagi (`SH, CH, O', G'`) matnlarni avtomatik yangi alifboga (`Ş, Ç, Ö, Ğ`) o'girish.
+3. **Microsoft Word Add-in:** Word dasturida bitta tugma bilan butun hujjatni formatlashni buzmagan holda yangi alifboga o'tkazish.
+
+🌐 **Rasmiy veb-sayt (Onlayn konvertor va simulyator):** [https://ravshon.github.io/yangi-alifbo/](https://ravshon.github.io/yangi-alifbo/)
 
 ---
 
-## ⌨️ Tugmalar Xaritasi
+## ⌨️ Klaviatura Tugmalari Xaritasi
 
 | Tugma (Asl US klaviaturasi) | Yangi klaviaturada (Oddiy) | Shift bilan | AltGr (O'ng Alt) | AltGr + Shift |
 |---|:---:|:---:|:---:|:---:|
@@ -15,26 +20,19 @@ Ushbu klaviatura tartibi (keyboard layout) O'zbekistonda yangi qabul qilingan lo
 | **`\` (Ğ ning o'ngida)** | **;** (nuqtali vergul) | **:** (ikki nuqta) | `\` | `\|` |
 | **`` ` `` (1 ning chapida)** | **'** (tutuq belgisi) | **"** (qo'shtirnoq) | `` ` `` | `~` |
 
-> 💡 **Eslatma:** Dasturlash va maxsus belgilar (`[`, `]`, `{`, `}`, `\`, `|`, `~`, `` ` ``) o'z o'rnida saqlab qolingan. Ularni yozish uchun shunchaki **o'ng tomondagi Alt (AltGr)** tugmasi bilan birga bosing.
+> 💡 **Eslatma:** Dasturlash qavslari (`[`, `]`, `{`, `}`, `\`, `|`, `~`, `` ` ``) yo'qolmagan — ularni kiritish uchun o'ng tomondagi **AltGr (o'ng Alt)** tugmasini bosish kifoya.
 
 ---
 
-## 🚀 O'rnatish Qo'llanmasi
+## 📝 Microsoft Office (Word) Qo'shimchasi
 
-1. Ushbu papkadagi **`setup.exe`** yoki **`O'rnatish.bat`** faylini ikki marta bosing.
-2. O'rnatish oynasida **Next** $\rightarrow$ **Close** tugmasini bosing.
-3. Windows til panelidan (**Win + Bo'sh joy** / `Win + Space`) **"Uzbek - new"** (O'zbekcha yangi alifbo) klaviaturasini tanlang.
-
----
-
-## 🗑️ O'chirish Tartibi
-
-Agar istalgan vaqtda ushbu klaviaturani o'chirmoqchi bo'lsangiz:
-- Papkadagi **`O'chirish.bat`** faylini ishga tushiring, yoki
-- Windows **Settings (Sozlamalar)** $\rightarrow$ **Apps (Ilovalar)** $\rightarrow$ **Installed apps** bo'limidan `Uzbek - new` ni tanlab **Uninstall** tugmasini bosing.
+* Microsoft Word ochilganda, **"Bosh sahifa" (Home)** lentasida maxsus **"Yangi alifboga o'girish"** tugmasi paydo bo'ladi.
+* 1 marta bosish bilan butun hujjatdagi barcha shriftlar, jadvallar, ranglar va qalin/kursiv formatlarni saqlagan holda yangi alifboga aylantiradi!
+* Standart va nostandart barcha apostroflarni (`O'`, `O‘`, `Oʻ`, `O’`, `G'`, `G‘`, `Gʻ`, `G’`) to'liq taniydi.
 
 ---
 
-## 📦 Tarqatish
+## 🚀 1-Klikda O'rnatish
 
-Boshqa foydalanuvchilar va do'stlaringizga ulashish uchun yonidagi **`Yangi_Alifbo_Klaviatura.zip`** arxiv faylini yuborishingiz mumkin. U har qanday Windows (Windows 10, Windows 11, 7, 8, 32-bit va 64-bit) tizimlarida bir xil ishlaydi.
+* Shunchaki bittagina [YangiAlifbo_Setup.exe](https://github.com/Ravshon/yangi-alifbo/releases/download/v1.0.0/YangiAlifbo_Setup.exe) faylini yuklab oling va oching.
+* Dastur avtomatik ravishda ham **Klaviatura drayverini**, ham **Microsoft Word qo'shimchasini** 1 soniyada tizimga o'rnatadi.
