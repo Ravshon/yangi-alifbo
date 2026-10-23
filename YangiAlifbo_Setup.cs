@@ -14,9 +14,10 @@ namespace YangiAlifboInstaller {
         private CheckBox chkKeyboard;
         private CheckBox chkWordAddin;
         private Button btnInstall;
-        private Button btnUninstall;
+        private LinkLabel lnkUninstall;
         private Label lblStatus;
         private ProgressBar progressBar;
+        private bool isInstalled = false;
 
         public InstallerForm() {
             InitializeComponent();
@@ -76,44 +77,44 @@ namespace YangiAlifboInstaller {
 
             // Progress bar
             progressBar = new ProgressBar();
-            progressBar.Location = new Point(25, 290);
-            progressBar.Size = new Size(495, 16);
+            progressBar.Location = new Point(25, 288);
+            progressBar.Size = new Size(495, 15);
             progressBar.Visible = false;
             progressBar.Style = ProgressBarStyle.Marquee;
 
             // Status label
             lblStatus = new Label();
             lblStatus.Text = "O'rnatish uchun quyidagi tugmani bosing:";
-            lblStatus.Location = new Point(25, 316);
-            lblStatus.Size = new Size(495, 25);
+            lblStatus.Location = new Point(25, 312);
+            lblStatus.Size = new Size(495, 24);
             lblStatus.Font = new Font("Segoe UI", 9.5f, FontStyle.Regular);
             lblStatus.ForeColor = Color.FromArgb(100, 116, 139);
 
-            // Install Button
+            // Install Button (Asosiy katta tugma)
             btnInstall = new Button();
             btnInstall.Text = "🚀  O'rnatish (1-klik)";
-            btnInstall.Font = new Font("Segoe UI", 11.5f, FontStyle.Bold);
+            btnInstall.Font = new Font("Segoe UI", 12f, FontStyle.Bold);
             btnInstall.BackColor = Color.FromArgb(16, 185, 129);
             btnInstall.ForeColor = Color.White;
             btnInstall.FlatStyle = FlatStyle.Flat;
             btnInstall.FlatAppearance.BorderSize = 0;
-            btnInstall.Location = new Point(25, 348);
-            btnInstall.Size = new Size(340, 52);
+            btnInstall.Location = new Point(25, 342);
+            btnInstall.Size = new Size(495, 52);
             btnInstall.Cursor = Cursors.Hand;
             btnInstall.Click += BtnInstall_Click;
 
-            // Uninstall Button
-            btnUninstall = new Button();
-            btnUninstall.Text = "🗑️  O'chirish";
-            btnUninstall.Font = new Font("Segoe UI", 9.5f, FontStyle.Regular);
-            btnUninstall.BackColor = Color.FromArgb(226, 232, 240);
-            btnUninstall.ForeColor = Color.FromArgb(71, 85, 105);
-            btnUninstall.FlatStyle = FlatStyle.Flat;
-            btnUninstall.FlatAppearance.BorderSize = 0;
-            btnUninstall.Location = new Point(380, 348);
-            btnUninstall.Size = new Size(140, 52);
-            btnUninstall.Cursor = Cursors.Hand;
-            btnUninstall.Click += BtnUninstall_Click;
+            // Uninstall Link (Pastda, kamtarona havola ko'rinishida)
+            lnkUninstall = new LinkLabel();
+            lnkUninstall.Text = "🗑️  Ilgari o'rnatilgan bo'lsa: Tizimdan o'chirish (Uninstall)...";
+            lnkUninstall.Font = new Font("Segoe UI", 8.8f, FontStyle.Regular);
+            lnkUninstall.LinkColor = Color.FromArgb(148, 163, 184);
+            lnkUninstall.ActiveLinkColor = Color.FromArgb(239, 68, 68);
+            lnkUninstall.LinkBehavior = LinkBehavior.HoverUnderline;
+            lnkUninstall.Location = new Point(25, 404);
+            lnkUninstall.Size = new Size(495, 22);
+            lnkUninstall.TextAlign = ContentAlignment.MiddleCenter;
+            lnkUninstall.Cursor = Cursors.Hand;
+            lnkUninstall.LinkClicked += LnkUninstall_LinkClicked;
 
             this.Controls.Add(lblTitle);
             this.Controls.Add(lblSubtitle);
@@ -121,10 +122,15 @@ namespace YangiAlifboInstaller {
             this.Controls.Add(progressBar);
             this.Controls.Add(lblStatus);
             this.Controls.Add(btnInstall);
-            this.Controls.Add(btnUninstall);
+            this.Controls.Add(lnkUninstall);
         }
 
         private void BtnInstall_Click(object sender, EventArgs e) {
+            if (isInstalled) {
+                Application.Exit();
+                return;
+            }
+
             if (!chkKeyboard.Checked && !chkWordAddin.Checked) {
                 MessageBox.Show("Iltimos, kamida bitta komponentni tanlang.", "Ogohlantirish", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
@@ -152,7 +158,7 @@ namespace YangiAlifboInstaller {
             }
 
             btnInstall.Enabled = false;
-            btnUninstall.Enabled = false;
+            lnkUninstall.Visible = false;
             progressBar.Visible = true;
             lblStatus.Text = "O'rnatilmoqda, iltimos kuting...";
             lblStatus.ForeColor = Color.FromArgb(16, 185, 129);
@@ -161,7 +167,14 @@ namespace YangiAlifboInstaller {
             try {
                 DoInstall(chkKeyboard.Checked, chkWordAddin.Checked);
                 progressBar.Visible = false;
-                lblStatus.Text = "✅ Muvaffaqiyatli o'rnatildi!";
+                isInstalled = true;
+
+                lblStatus.Text = "✅ Muvaffaqiyatli o'rnatildi! Chiqish uchun tugmani bosing.";
+                lblStatus.ForeColor = Color.FromArgb(16, 185, 129);
+
+                btnInstall.Text = "✅  Tayyor! Dasturdan chiqish";
+                btnInstall.BackColor = Color.FromArgb(37, 99, 235);
+                btnInstall.Enabled = true;
                 
                 string msg = "Tanlangan komponentlar muvaffaqiyatli o'rnatildi!\n\n";
                 if (chkKeyboard.Checked) {
@@ -175,19 +188,19 @@ namespace YangiAlifboInstaller {
                 progressBar.Visible = false;
                 lblStatus.Text = "Xatolik yuz berdi.";
                 lblStatus.ForeColor = Color.Red;
-                MessageBox.Show("Xatolik: " + ex.Message, "Xatolik", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            } finally {
                 btnInstall.Enabled = true;
-                btnUninstall.Enabled = true;
+                lnkUninstall.Visible = true;
+                MessageBox.Show("Xatolik: " + ex.Message, "Xatolik", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        private void BtnUninstall_Click(object sender, EventArgs e) {
+        private void LnkUninstall_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
             DialogResult res = MessageBox.Show(
-                "Yangi alifbo komponentlarini tizimdan o'chirmoqchimisiz?",
-                "Tasdiqlash",
+                "Yangi Alifbo komponentlarini (klaviatura va Word qo'shimchasini) kompyuteringizdan to'liq o'chirmoqchimisiz?\n\n" +
+                "DIQQAT: Agar siz dasturni hozirgina o'rnatgan bo'lsangiz, bu amalni bekor qiling ('Yo'q' tugmasini bosing)!",
+                "Tizimdan o'chirishni tasdiqlang",
                 MessageBoxButtons.YesNo,
-                MessageBoxIcon.Question
+                MessageBoxIcon.Warning
             );
             if (res != DialogResult.Yes) return;
 
@@ -203,16 +216,18 @@ namespace YangiAlifboInstaller {
             }
 
             btnInstall.Enabled = false;
-            btnUninstall.Enabled = false;
+            lnkUninstall.Enabled = false;
             progressBar.Visible = true;
             lblStatus.Text = "Tizimdan o'chirilmoqda...";
+            lblStatus.ForeColor = Color.FromArgb(239, 68, 68);
             Application.DoEvents();
 
             try {
                 DoUninstall(chkKeyboard.Checked, chkWordAddin.Checked);
                 progressBar.Visible = false;
                 lblStatus.Text = "O'chirish yakunlandi.";
-                MessageBox.Show("Tanlangan komponentlar tizimdan o'chirildi.", "Ma'lumot", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                lblStatus.ForeColor = Color.FromArgb(71, 85, 105);
+                MessageBox.Show("Tanlangan komponentlar tizimdan to'liq o'chirildi.", "Ma'lumot", MessageBoxButtons.OK, MessageBoxIcon.Information);
             } catch (Exception ex) {
                 progressBar.Visible = false;
                 lblStatus.Text = "O'chirishda xatolik yuz berdi.";
@@ -220,7 +235,7 @@ namespace YangiAlifboInstaller {
                 MessageBox.Show("Xatolik: " + ex.Message, "Xatolik", MessageBoxButtons.OK, MessageBoxIcon.Error);
             } finally {
                 btnInstall.Enabled = true;
-                btnUninstall.Enabled = true;
+                lnkUninstall.Enabled = true;
             }
         }
 
